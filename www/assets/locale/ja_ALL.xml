@@ -26,6 +26,10 @@
 <msg name="condition">条件</msg>
 <msg name="nostarred">スター付きのツアーはありません。</msg>
 
+<msg name="select_area">方面を選択</msg>
+<msg name="select_country">国を選択</msg>
+<msg name="select_city">都市を選択</msg>
+
 <!-- ========================================
 
 	Errors

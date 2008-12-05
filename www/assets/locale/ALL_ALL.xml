@@ -26,6 +26,10 @@
 <msg name="condition">Condition</msg>
 <msg name="nostarred">You have no starred tour.</msg>
 
+<msg name="select_area">Area</msg>
+<msg name="select_country">Country</msg>
+<msg name="select_city">City</msg>
+
 <!-- ========================================
 
 	Errors
