@@ -24,6 +24,7 @@
 <msg name="result">Results</msg>
 <msg name="search">Search</msg>
 <msg name="condition">Condition</msg>
+<msg name="nostarred">You have no starred tour.</msg>
 
 <!-- ========================================
 
