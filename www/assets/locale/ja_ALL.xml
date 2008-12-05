@@ -24,6 +24,7 @@
 <msg name="result">検索結果</msg>
 <msg name="search">検索</msg>
 <msg name="condition">条件</msg>
+<msg name="nostarred">スター付きのツアーはありません。</msg>
 
 <!-- ========================================
 
