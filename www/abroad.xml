@@ -62,7 +62,7 @@ results
 <div id="starred" class="wrapper hidden">
 starred
 </div>
-<script type="text/javascript">ABROAD.ModuleView("__MODULE_ID__",false);</script>
+<script type="text/javascript">ABROAD.init("__MODULE_ID__");</script>
 ]]></Content>
 
 
