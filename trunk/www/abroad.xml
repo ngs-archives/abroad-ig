@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+<!-- ========================================
+
+  @author : Atsushi Nagase
+
+  Copyright 2008 Atsushi Nagase All rights reserved.
+  http://ngsdev.org/
+
+======================================== -->
+<ModulePrefs
+	title="__MSG_module_title__"
+	title_url="http://www.ab-road.net/"
+	description="__MSG_module_description__"
+	screenshot="__MSG_module_screenshot__"
+	thumbnail="__MSG_module_thumbnail__"
+	scrolling="false"
+	singleton="false"
+	height="210"
+
+	author_email="atsn.ngs+abroad-ig@gmail.com"
+
+	author="__MSG_author_name__"
+	author_affiliation="__MSG_author_affiliation__"
+	author_location="__MSG_author_location__"
+	author_aboutme="__MSG_author_aboutme__"
+	author_link="__MSG_author_link__"
+	author_photo="__MSG_author_photo__">
+
+	<Locale messages="http://abroad-ig.googlecode.com/svn/trunk/www/assets/locale/ALL_ALL.xml" />
+	<Locale messages="http://abroad-ig.googlecode.com/svn/trunk/www/assets/locale/ja_ALL.xml" lang="ja" />
+
+	<Require feature="opensocial-0.7"/>
+	<Require feature="dynamic-height"/>
+	<Require feature="setprefs" />
+	<Require feature="views" />
+	<Require feature="tabs"/>
+
+</ModulePrefs>
+
+
+<UserPref name="tab" datatype="hidden" />
+<UserPref name="starred" datatype="hidden" />
+
+<UserPref name="area" datatype="hidden" />
+<UserPref name="country" datatype="hidden" />
+<UserPref name="city" datatype="hidden" />
+<UserPref name="dept" datatype="hidden" />
+<UserPref name="md" datatype="hidden" />
+
+
+<Content type="html"><![CDATA[
+<link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-ig/assets/css/abroad.css?rnd=4" />
+<script type="text/javascript" src="http://abroad-ig.googlecode.com/svn/trunk/www/assets/js/jquery-1.2.6.pack.js?rnd=4"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.js?rnd=4"></script>
+<div id="form" class="wrapper hidden">
+form
+</div>
+<div id="results" class="wrapper hidden">
+results
+</div>
+<div id="starred" class="wrapper hidden">
+starred
+</div>
+<script type="text/javascript">ABROAD.ModuleView("__MODULE_ID__",false);</script>
+]]></Content>
+
+
+
+
+</Module> 
