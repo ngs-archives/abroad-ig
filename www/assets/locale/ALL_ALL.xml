@@ -32,6 +32,13 @@
 
 <msg name="select_destination">Select Destination</msg>
 
+<msg name="select_departure">Select departure</msg>
+<msg name="tokyo">Tokyo</msg>
+<msg name="osaka">Osaka</msg>
+<msg name="nagoya">Nagoya</msg>
+<msg name="fukuoka">Fukuoka</msg>
+<msg name="other_cities">Other Cities</msg>
+
 
 <!-- ========================================
 
