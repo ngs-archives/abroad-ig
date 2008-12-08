@@ -32,6 +32,13 @@
 
 <msg name="select_destination">行き先を指定する</msg>
 
+<msg name="select_departure">出発日時/都市を指定する</msg>
+<msg name="tokyo">東京</msg>
+<msg name="osaka">大阪</msg>
+<msg name="nagoya">名古屋</msg>
+<msg name="fukuoka">福岡</msg>
+<msg name="other_cities">その他都市</msg>
+
 <!-- ========================================
 
 	Errors
