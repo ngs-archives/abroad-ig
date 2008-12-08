@@ -17,9 +17,7 @@
 	scrolling="false"
 	singleton="false"
 	height="210"
-
 	author_email="atsn.ngs+abroad-ig@gmail.com"
-
 	author="__MSG_author_name__"
 	author_affiliation="__MSG_author_affiliation__"
 	author_location="__MSG_author_location__"
@@ -38,16 +36,13 @@
 
 </ModulePrefs>
 
-
 <UserPref name="tab" datatype="hidden" />
 <UserPref name="starred" datatype="hidden" />
-
 <UserPref name="area" datatype="hidden" />
 <UserPref name="country" datatype="hidden" />
 <UserPref name="city" datatype="hidden" />
 <UserPref name="dept" datatype="hidden" />
 <UserPref name="md" datatype="hidden" />
-
 
 <Content type="html"><![CDATA[
 <link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-ig/assets/css/abroad.css?rnd=4" />
@@ -93,10 +88,10 @@
 	</form>
 </div>
 <div id="results" class="wrapper">
-results
+	
 </div>
 <div id="starred" class="wrapper">
-starred
+	
 </div>
 <script type="text/javascript">ABROAD.init("__MODULE_ID__");</script>
 ]]></Content> 
