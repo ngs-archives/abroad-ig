@@ -30,6 +30,9 @@
 <msg name="select_country">Country</msg>
 <msg name="select_city">City</msg>
 
+<msg name="select_destination">Select Destination</msg>
+
+
 <!-- ========================================
 
 	Errors

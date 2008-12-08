@@ -30,6 +30,8 @@
 <msg name="select_country">国を選択</msg>
 <msg name="select_city">都市を選択</msg>
 
+<msg name="select_destination">行き先を指定する</msg>
+
 <!-- ========================================
 
 	Errors
