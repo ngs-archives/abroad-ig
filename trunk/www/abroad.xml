@@ -53,7 +53,7 @@
 <link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-ig/assets/css/abroad.css?rnd=4" />
 <script type="text/javascript" src="http://abroad-ig.googlecode.com/svn/trunk/www/assets/js/jquery-1.2.6.pack.js?rnd=4"></script>
 <script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.js?rnd=4"></script>
-<div id="form" class="wrapper hidden">
+<div id="form" class="wrapper">
 	<form id="search-form">
 		<fieldset id="dest">
 			<legend title="__MSG_select_destination__">__MSG_select_destination__</legend>
@@ -65,10 +65,10 @@
 		</fieldset>
 	</form>
 </div>
-<div id="results" class="wrapper hidden">
+<div id="results" class="wrapper">
 results
 </div>
-<div id="starred" class="wrapper hidden">
+<div id="starred" class="wrapper">
 starred
 </div>
 <script type="text/javascript">ABROAD.init("__MODULE_ID__");</script>
