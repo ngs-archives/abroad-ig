@@ -41,6 +41,9 @@
 
 <msg name="tours_available">tours were found.</msg>
 
+<msg name="add_star">Add Star</msg>
+<msg name="remove_star">Remove Star</msg>
+
 <!-- ========================================
 
 	Errors
