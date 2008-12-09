@@ -45,11 +45,11 @@
 <UserPref name="md" datatype="hidden" />
 
 <Content type="html"><![CDATA[
-<link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-ig/assets/css/abroad.css?rnd=5" />
+<link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-ig/assets/css/abroad.css?rnd=12" />
 <script type="text/javascript" src="http://abroad-ig.googlecode.com/svn/trunk/www/assets/js/jquery-1.2.6.pack.js?rnd=4"></script>
 <script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/recruit.ui.js?rnd=4"></script>
 <script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.ui.js?rnd=4"></script>
-<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.js?rnd=7"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.js?rnd=22"></script>
 <div id="form" class="wrapper">
 	<form id="search-form">
 		<fieldset id="dest">
