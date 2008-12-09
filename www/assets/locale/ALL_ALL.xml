@@ -24,6 +24,7 @@
 <msg name="result">Results</msg>
 <msg name="search">Search</msg>
 <msg name="condition">Condition</msg>
+<msg name="loading">Loading</msg>
 
 <msg name="select_area">Area</msg>
 <msg name="select_country">Country</msg>
