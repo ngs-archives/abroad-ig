@@ -10,5 +10,26 @@
 
 body { font-size:0.8em; color:#333; }
 fieldset, legend, p { margin:0; padding:0; border:0 none; }
+ul, ol, li { margin:0; padding:0; list-style:none; }
+img { border:0; }
+em { font-style:normal; font-weight:bolder; }
+blockquote { padding:0; margin:0; }
 
 div.wrapper { padding:1em 0 0 0; }
+form#search-form fieldset { width:100%; float:left; clear:left; padding-bottom:1em; }
+form#search-form legend { font-size:0.8em; padding:0 0 0.2em 0; }
+form#search-form label { white-space:nowrap; display:block; float:left; padding:0 0.5em 0 0; }
+form#search-form label input,
+form#search-form label span.l { display:block; float:left; }
+form#search-form div.body { border-top:1px solid #666; padding:1em 0; float:left; width:100%; }
+fieldset#dest select { width:32%; float:left; margin:0 1% 0 0; }
+
+ul.tours, ul.tours li { width:100%; float:left; position:relative; top:0; left:0; clear:left; overflow:hidden; }
+ul.tours li { min-height:86px; border-top:1px solid #999; }
+ul.tours li.even { background:#eee; }
+ul.tours p.pict { position:absolute; top:10px; left:0; }
+ul.tours p.pict a { display:block; width:66px; height:66px; overflow:hidden; }
+ul.tours p.pict a img {  }
+ul.tours div.text { padding:10px 0 1em 76px; }
+ul.tours div.text h3 { margin:0; padding:0 0 0.5em 0; font-size:1.1em; }
+ul.tours blockquote.point { font-size:0.8em; } 
