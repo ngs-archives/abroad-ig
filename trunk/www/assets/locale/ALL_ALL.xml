@@ -24,7 +24,6 @@
 <msg name="result">Results</msg>
 <msg name="search">Search</msg>
 <msg name="condition">Condition</msg>
-<msg name="nostarred">You have no starred tour.</msg>
 
 <msg name="select_area">Area</msg>
 <msg name="select_country">Country</msg>
@@ -39,6 +38,7 @@
 <msg name="fukuoka">Fukuoka</msg>
 <msg name="other_cities">Other Cities</msg>
 
+<msg name="tours_available">tours were found.</msg>
 
 <!-- ========================================
 
@@ -48,5 +48,8 @@
 
 <msg name="unknown_error">An unknown error has occured.</msg>
 <msg name="fetch_error">Could not fetch feed data.</msg>
+
+<msg name="nostarred">You have no starred tour.</msg>
+<msg name="notours">No tours were found.</msg>
 
 </messagebundle>

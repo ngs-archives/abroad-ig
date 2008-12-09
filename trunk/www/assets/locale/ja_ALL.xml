@@ -24,7 +24,6 @@
 <msg name="result">検索結果</msg>
 <msg name="search">検索</msg>
 <msg name="condition">条件</msg>
-<msg name="nostarred">スター付きのツアーはありません。</msg>
 
 <msg name="select_area">方面を選択</msg>
 <msg name="select_country">国を選択</msg>
@@ -39,6 +38,8 @@
 <msg name="fukuoka">福岡</msg>
 <msg name="other_cities">その他都市</msg>
 
+<msg name="tours_available">件のツアーが該当しました。</msg>
+
 <!-- ========================================
 
 	Errors
@@ -47,5 +48,8 @@
 
 <msg name="unknown_error">予期せぬエラーが起こりました。</msg>
 <msg name="fetch_error">フィードが取得できません。</msg>
+
+<msg name="nostarred">スター付きのツアーはありません。</msg>
+<msg name="notours">該当するツアーが見つかりませんでした。</msg>
 
 </messagebundle>
