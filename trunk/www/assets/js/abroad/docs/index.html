@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>エイビーロード - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new ABROAD.UI.Places.Pulldown();
+    new ABROAD.UI.Dept.Pulldown();
+    new ABROAD.UI.Order.Pulldown();
+    new ABROAD.UI.Month.Pulldown();
+    new ABROAD.UI.Price.Pulldown();
+    new ABROAD.UI.Term.Pulldown();
+
+    $( 'form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">エイビーロード</a></h1>
+        <p>ABROAD.UI.*: a part of Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; エイビーロード
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p><img src="img/logo.gif" style="float:left;margin-bottom:10px;margin-right:5px"/><a href="http://webservice.recruit.co.jp/ab-road/">エイビーロード WEBサービス</a>を活用したサイトを構築する際、便利に使えるユーザーインターフェース系のJavascriptライブラリです。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="libs">提供ライブラリ一覧</h2>
+    <h3>エリア選択</h3>
+    <dl>
+        <dt id="libs-places-pulldown"><a href="places.pulldown.html">エリア選択 プルダウン</a></dt>
+        <dd>エリア/国/都市などの地域を選択する為の3つのプルダウンを自動生成するモジュール。これらプルダウンが相互連動します。ABROAD.UI.Places.Pulldown
+        <div class="sample">
+        <form action="">
+        <select id="ab-area-sel"></select><br /><select id="ab-country-sel"></select><br /><select id="ab-city-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+        </form>
+        </div>
+        <p class="to-desc"><a href="places.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>出発地選択</h3>
+    <dl>
+        <dt id="libs-dept-pulldown"><a href="dept.pulldown.html">出発地選択 プルダウン</a></dt>
+        <dd>旅行の出発地を選択する為のプルダウンを自動生成するモジュール。ABROAD.UI.Dept.Pulldown
+        <div class="sample">
+            <form action="">
+            <select id="ab-dept-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="dept.pulldown.html">&gt;&gt; 詳細ページへ</a></p>
+        <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>出発年月選択</h3>
+    <dl>
+        <dt id="libs-month-pulldown"><a href="month.pulldown.html">出発年月選択 プルダウン</a></dt>
+        <dd>旅行の出発月を選択する為のプルダウンを自動生成するモジュール。ABROAD.UI.Month.Pulldown
+        <div class="sample">
+            <form action="">
+            <select id="ab-month-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="month.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>価格帯選択</h3>
+    <dl>
+        <dt id="libs-price-pulldown"><a href="price.pulldown.html">価格帯選択 プルダウン</a></dt>
+        <dd>旅行の予算(価格帯)を選択する為のプルダウンを自動生成するモジュール。ABROAD.UI.Price.Pulldown
+        <div class="sample">
+            <form action="">
+            <select style="width:120px" id="ab-price-min-sel"></select> － <select style="width:120px" id="ab-price-max-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="price.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>期間選択</h3>
+    <dl>
+        <dt id="libs-term-pulldown"><a href="term.pulldown.html">期間選択 プルダウン</a></dt>
+        <dd>旅行の日数(期間)を選択する為のプルダウンを自動生成するモジュール。ABROAD.UI.Term.Pulldown
+        <div class="sample">
+            <form action="">
+            <select style="width:120px" id="ab-term-min-sel"></select> － <select style="width:120px" id="ab-term-max-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="term.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h3>並び順選択</h3>
+    <dl>
+        <dt id="libs-order-pulldown"><a href="order.pulldown.html">並び順選択 プルダウン</a></dt>
+        <dd>海外旅行検索APIのレスポンス結果の並び順を選択する為のプルダウンを自動生成するモジュール。ABROAD.UI.Order.Pulldown
+        <div class="sample">
+            <form action="">
+            <select id="ab-order-sel"></select>
+            <input class="submit-btn" type="submit" value="値を確認" />
+            </form>
+        </div>
+        <p class="to-desc"><a href="order.pulldown.html">&gt;&gt; 詳細ページへ</a></p><p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p></dd>
+    </dl>
+    <h2 id="samples">サンプルコード</h2>
+    <p>上記ライブラリをすべて使用した場合のサンプルです:</p>
+    <pre style="padding:20px"><a href="../samples/use_all.html">組み合わせ利用 サンプルコード</a></pre>
+    <p>その他個別ライブラリごとのサンプルコードはそれらの詳細ページを参照のこと。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="updates">更新履歴</h2>
+    <dl class="updates">
+        <dt>2008.03.31</dt>
+        <dd>v1.03<br/>* on_update_hook オプション指定のドキュメント追加<br/>* get_current_stat() メソッド追加</dd>
+        <dt>2008.03.26</dt>
+        <dd>v1.01 クラスメソッド ABROAD.UI.Places.find_place_by_code を インスタンスメソッド ABROAD.UI.Places.Pulldown#find_item_by_code に変更</dd>
+        <dt>2008.01.18</dt>
+        <dd>v1.00 初回リリース</dd>
+    </dl>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#libs">提供ライブラリ一覧</a>
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li>エリア選択
+                <ul class="nobullet2">
+                <li><a href="#libs-places-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>出発地選択
+                <ul class="nobullet2">
+                <li><a href="#libs-dept-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>出発月選択
+                <ul class="nobullet2">
+                <li><a href="#libs-month-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>価格帯選択
+                <ul class="nobullet2">
+                <li><a href="#libs-price-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>期間選択
+                <ul class="nobullet2">
+                <li><a href="#libs-term-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+            <li>並び順選択
+                <ul class="nobullet2">
+                <li><a href="#libs-order-pulldown">プルダウン</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li><a href="#samples">サンプルコード</a></li>
+    <li><a href="#updates">更新履歴</a></li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/ab-road/">エイビーロード WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

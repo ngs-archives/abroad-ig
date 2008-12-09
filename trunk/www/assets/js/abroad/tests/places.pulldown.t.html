@@ -1,0 +1,533 @@
+<html>
+<head>
+<script type="text/javascript" src="../../recruit/tests/js/JSAN.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <select id="ab-area-sel"></select>
+    <select id="ab-area-sel-2"></select>
+    <select id="ab-area-sel-3"></select>
+    <select id="ab-area-sel-4"></select>
+    <br />
+    <select id="ab-country-sel"></select>
+    <select id="ab-country-sel-2"></select>
+    <select id="ab-country-sel-3"></select>
+    <select id="ab-country-sel-4"></select>
+    <select id="ab-country-sel-5"></select>
+    <br />
+    <select id="ab-city-sel"></select>
+    <select id="ab-city-sel-2"></select>
+    <select id="ab-city-sel-3"></select>
+    <select id="ab-city-sel-4"></select>
+    <select id="ab-city-sel-5"></select>
+    <br />
+    <select id="combo-ab-area-sel"></select>
+    <select id="combo-ab-country-sel"></select>
+    <select id="combo-ab-city-sel"></select>
+    <br />
+    <select id="combo-ab-area-sel-2"></select>
+    <select id="combo-ab-country-sel-2"></select>
+    <br />
+    <select id="combo-ab-country-sel-3"></select>
+    <select id="combo-ab-city-sel-3"></select>
+    <br />
+    <select id="combo-ab-country-sel-4"></select>
+    <br />
+    <select id="combo-ab-area-sel-5"></select>
+    <select id="combo-ab-country-sel-5"></select>
+    <select id="combo-ab-city-sel-5"></select>
+    <br />
+    <select id="combo-ab-area-sel-6"></select>
+    <select id="combo-ab-country-sel-6"></select>
+    <select id="combo-ab-city-sel-6"></select>
+    <br />
+    <select id="combo-ab-area-sel-7"></select>
+</div>
+<pre id="test"><script type="text/javascript">
+
+JSAN.use( "Test.More" );
+plan({ tests: 127 });
+
+is( typeof ABROAD, 'function' );
+is( typeof ABROAD.UI, 'function' );
+is( typeof ABROAD.UI.Places, 'function' );
+
+// set API key
+Recruit.UI.key = 'a450fa593ee3f2a4';
+
+// エリア - 正常系
+(function (){
+    // デフォルト
+    new ABROAD.UI.Places.Area.Pulldown({
+        on_update_hook: function ( success ){
+            ok( success, 'area - default' );
+            var elm = $( '#ab-area-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 1 );
+            is( $( opt[1] ).val(), 'AAS' );
+            is( $( opt[7] ).val(), 'HWI' );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).text(), 'アジア' );
+            is( $( opt[7] ).text(), 'ハワイ' );
+        }
+    });
+    // ツアーカウント表示 with_tour_count
+    new ABROAD.UI.Places.Area.Pulldown({
+        id: 'ab-area-sel-3',
+        with_tour_count: true,
+        on_update_hook: function ( success ){
+            ok( success, 'area - with_tour_count' );
+            var elm = $( '#ab-area-sel-3' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 1 );
+            is( $( opt[1] ).val(), 'AAS' );
+            ok( $( opt[1] ).text().match( /アジア  \(\d+\)/ ) );
+        }
+    });
+    // 初期値 val を指定
+    new ABROAD.UI.Places.Area.Pulldown({
+        id: 'ab-area-sel-4',
+        val: 'BCH',
+        on_update_hook: function ( success ){
+            ok( success, 'area - val' );
+            var elm = $( '#ab-area-sel-4' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 1 );
+            is( elm.val(), 'BCH' );
+        }
+    });
+})();
+
+// エリア - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new ABROAD.UI.Places.Area.Pulldown({
+        id: 'ab-area-sel-2',
+        on_update_hook: function ( success ){
+            ok( !success, 'area - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#ab-area-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// エリア - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new ABROAD.UI.Places.Area.Pulldown({
+        id: 'ab-area-sel-xxx'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ), 'area - no elm' );
+})();
+
+// 国 - 正常系
+(function (){
+    // デフォルト
+    new ABROAD.UI.Places.Country.Pulldown({
+        area: 'AAS',
+        on_update_hook: function ( success ){
+            ok( success, 'country - default' );
+            var elm = $( '#ab-country-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).val(), 'IN' );
+            is( $( opt[1] ).text(), 'インド' );
+        }
+    });
+    // ツアーカウント表示 
+    new ABROAD.UI.Places.Country.Pulldown({
+        id: 'ab-country-sel-4',
+        area: 'AAS',
+        with_tour_count: true,
+        on_update_hook: function ( success ){
+            ok( success, 'country - with_tour_count' );
+            var elm = $( '#ab-country-sel-4' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).val(), 'IN' );
+            is( $( opt[1] ).text().match( /インド  (\d+)/ ) );
+        }
+    });
+    // 初期値 val を指定 
+    new ABROAD.UI.Places.Country.Pulldown({
+        id: 'ab-country-sel-5',
+        area: 'BCH',
+        val: 'SP', // サイパン
+        with_tour_count: true,
+        on_update_hook: function ( success ){
+            ok( success, 'country - val' );
+            var elm = $( '#ab-country-sel-5' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( elm.val(), 'SP' );
+        }
+    });
+})();
+// 国 - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new ABROAD.UI.Places.Country.Pulldown({
+        id: 'ab-country-sel-2',
+        area: 'AAS',
+        on_update_hook: function ( success ){
+            ok( !success, 'country - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#ab-country-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// 国 - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new ABROAD.UI.Places.Country.Pulldown({
+        id: 'ab-country-sel-xxx',
+        area: 'AAS'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ),
+        'country - no elm' );
+})();
+// 国 - 異常系 - エリアを指定しなかったら
+(function (){
+    var ar = new ABROAD.UI.Places.Country.Pulldown({
+        id: 'ab-country-sel-3'
+    });
+    var elm = $( '#ab-country-sel-3' );
+    var opt = elm.find( 'option' );
+    is( elm.length, 1 );
+    is( opt.length, 1 );
+    ok( ar.is_error );
+    ok( ar.error_msg.match( /areaが指定されていません/ ) );
+})();
+
+// 都市 - 正常系
+(function (){
+    // デフォルト
+    new ABROAD.UI.Places.City.Pulldown({
+        country: 'BE',
+        on_update_hook: function ( success ){
+            ok( success, 'city - default' );
+            var elm = $( '#ab-city-sel' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).val(), 'ANR' );
+            is( $( opt[1] ).text(), 'アントワープ' );
+        }
+    });
+    // ツアーカウント表示 
+    new ABROAD.UI.Places.City.Pulldown({
+        id: 'ab-city-sel-4',
+        country: 'BE',
+        with_tour_count: true,
+        on_update_hook: function ( success ){
+            ok( success, 'city - with_tour_count' );
+            var elm = $( '#ab-city-sel-4' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( $( opt[0] ).text(), '指定なし' );
+            is( $( opt[1] ).val(), 'ANR' );
+            is( $( opt[1] ).text().match( /アントワープ  (\d+)/ ) );
+        }
+    });
+    // 初期値 val を指定 
+    new ABROAD.UI.Places.City.Pulldown({
+        id: 'ab-city-sel-5',
+        country: 'BE',
+        val: 'BRU', // ブリュッセル
+        with_tour_count: true,
+        on_update_hook: function ( success ){
+            ok( success, 'city - val' );
+            var elm = $( '#ab-city-sel-5' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            ok( opt.length > 0 );
+            is( elm.val(), 'BRU' );
+        }
+    });
+})();
+// 都市 - 異常系
+(function (){
+    // APIキーを間違えたら
+    var ar = new ABROAD.UI.Places.City.Pulldown({
+        id: 'ab-city-sel-2',
+        country: 'BE',
+        on_update_hook: function ( success ){
+            ok( !success, 'city - wrong api key' );
+            ok( this.driver.errstr.match( /APIキー.+?正しくありません/ ) );
+            var elm = $( '#ab-city-sel-2' );
+            var opt = elm.find( 'option' );
+            is( elm.length, 1 );
+            is( opt.length, 1 );
+        },
+        prm: {
+            key: 'wrong_key'
+        }
+    });
+})();
+// 都市 - 異常系 - プルダウン要素が存在しなかったら
+(function (){
+    var ar = new ABROAD.UI.Places.City.Pulldown({
+        id: 'ab-city-sel-xxx',
+        country: 'BE'
+    });
+    is( ar.is_error, true );
+    ok( ar.error_msg.match(
+        /HTML要素が見つかりません/ ),
+        'city - no elm' );
+})();
+// 都市 - 異常系 - 国を指定しなかったら
+(function (){
+    var ar = new ABROAD.UI.Places.City.Pulldown({
+        id: 'ab-city-sel-3'
+    });
+    var elm = $( '#ab-city-sel-3' );
+    var opt = elm.find( 'option' );
+    is( elm.length, 1 );
+    is( opt.length, 1 );
+    ok( ar.is_error );
+    ok( ar.error_msg.match( /countryが指定されていません/ ) );
+})();
+
+// コンビネーション - 基本形
+(function (){
+    var p = new ABROAD.UI.Places.Pulldown({
+        area: {
+            id: 'combo-ab-area-sel',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - basic' );
+                // プルダウン存在チェック
+                var elm_ar = $( '#combo-ab-area-sel' );
+                var opt_ar = elm_ar.find( 'option' );
+                is( elm_ar.length, 1 );
+                ok( opt_ar.length > 1 );
+                var elm_co = $( '#combo-ab-country-sel' );
+                var opt_co = elm_co.find( 'option' );
+                is( elm_co.length, 1 );
+                is( opt_co.length, 1 );
+                var elm_ci = $( '#combo-ab-city-sel' );
+                var opt_ci = elm_ci.find( 'option' );
+                is( elm_ci.length, 1 );
+                is( opt_ci.length, 1 );
+                // 連動更新チェック
+                p.country.driver.on_update_hook = function ( success ){
+                    ok( success, 'country 連動更新' );
+                    var elm_co = $( '#combo-ab-country-sel' );
+                    var opt_co = elm_co.find( 'option' );
+                    cmpOK( opt_co.length, '>', 1 );
+                    // 国更新
+                    p.city.driver.on_update_hook = function ( success ){
+                        ok( success, 'city 連動更新' );
+                        var elm_ci = $( '#combo-ab-city-sel' );
+                        var opt_ci = elm_ci.find( 'option' );
+                        cmpOK( opt_ci.length, '>', 1 );
+                    };
+                    p.country.elm.val( 'IN' ).change(); // 国更新
+                };
+                p.area.elm.val( 'AAS' ).change(); // エリア更新
+            }
+        },
+        country: { id: 'combo-ab-country-sel' },
+        city:    { id: 'combo-ab-city-sel' }
+    });
+})();
+// コンビネーション - Area + Country のみ
+(function (){
+    new ABROAD.UI.Places.Pulldown({
+        area: {
+            id: 'combo-ab-area-sel-2',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - area + country' );
+                // プルダウン存在チェック
+                var elm_ar = $( '#combo-ab-area-sel-2' );
+                var opt_ar = elm_ar.find( 'option' );
+                is( elm_ar.length, 1 );
+                ok( opt_ar.length > 1 );
+                var elm_co = $( '#combo-ab-country-sel-2' );
+                var opt_co = elm_co.find( 'option' );
+                is( elm_co.length, 1 );
+                is( opt_co.length, 1 );
+            }
+        },
+        country: { id: 'combo-ab-country-sel-2' },
+        city:    { id: 'combo-ab-city-sel-2' }
+    });
+})();
+// コンビネーション - Country + City のみ
+(function (){
+    new ABROAD.UI.Places.Pulldown({
+        area: { id: 'combo-ab-area-sel-3' },
+        country: {
+            id: 'combo-ab-country-sel-3',
+            area: 'BCH',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - country + city' );
+                // プルダウン存在チェック
+                var elm_co = $( '#combo-ab-country-sel-3' );
+                var opt_co = elm_co.find( 'option' );
+                is( elm_co.length, 1 );
+                cmpOK( opt_co.length, '>', 1 );
+                var elm_ci = $( '#combo-ab-city-sel-3' );
+                var opt_ci = elm_co.find( 'option' );
+                is( elm_ci.length, 1 );
+                cmpOK( opt_ci.length, '>', 1 );
+            }
+        },
+        city: { id: 'combo-ab-city-sel-3' }
+    });
+})();
+// コンビネーション - 単品利用 (country)
+(function (){
+    new ABROAD.UI.Places.Pulldown({
+        area: { id: 'combo-ab-area-sel-4' },
+        country: {
+            id: 'combo-ab-country-sel-4',
+            area: 'BCH',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - country standalone' );
+                // プルダウン存在チェック
+                var elm_co = $( '#combo-ab-country-sel-4' );
+                var opt_co = elm_co.find( 'option' );
+                is( elm_co.length, 1 );
+                cmpOK( opt_co.length, '>', 1 );
+            }
+        },
+        city: { id: 'combo-ab-city-sel-4' }
+    });
+})();
+
+
+// find_item_by_code
+(function (){
+    var p = new ABROAD.UI.Places.Pulldown();
+    p.find_item_by_code({
+        city: 'BRU',
+        callback: function ( itm ){
+            ok( itm, 'find_place_by_code - city' );
+            is( itm.name, 'ブリュッセル' );
+            is( itm.country.name, 'ベルギー' );
+            is( itm.area.name, 'ヨーロッパ' );
+        }
+    });
+    p = new ABROAD.UI.Places.Pulldown();
+    p.find_item_by_code({
+        country: 'BE',
+        callback: function ( itm ){
+            ok( itm, 'find_place_by_code - country' );
+            is( itm.name, 'ベルギー' );
+            is( itm.area.name, 'ヨーロッパ' );
+        }
+    });
+    p = new ABROAD.UI.Places.Pulldown();
+    p.find_item_by_code({
+        area: 'EUR',
+        callback: function ( itm ){
+            ok( itm, 'find_place_by_code - area' );
+            is( itm.name, 'ヨーロッパ' );
+        }
+    });
+})();
+
+// コンビネーション - デフォルト city 値つき
+(function (){
+    new ABROAD.UI.Places.Pulldown({
+        area: {
+            id: 'combo-ab-area-sel-5',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default city - area' );
+                is( $( '#combo-ab-area-sel-5' ).val(), 'EUR' );
+            }
+        },
+        country: {
+            id: 'combo-ab-country-sel-5',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default city - country' );
+                is( $( '#combo-ab-country-sel-5' ).val(), 'BE' );
+            }
+        },
+        city: {
+            id: 'combo-ab-city-sel-5',
+            val: 'BRU',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default city - city' );
+                is( $( '#combo-ab-city-sel-5' ).val(), 'BRU' );
+            }
+        }
+    });
+})();
+// コンビネーション - デフォルト country 値つき
+(function (){
+    new ABROAD.UI.Places.Pulldown({
+        area: {
+            id: 'combo-ab-area-sel-6',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default country - area' );
+                is( $( '#combo-ab-area-sel-6' ).val(), 'EUR' );
+            }
+        },
+        country: {
+            id: 'combo-ab-country-sel-6',
+            val: 'BE',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default country - country' );
+                is( $( '#combo-ab-country-sel-6' ).val(), 'BE' );
+            }
+        },
+        city: {
+            id: 'combo-ab-city-sel-6',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default country - city' );
+                cmpOK( $( '#combo-ab-city-sel-6 option' ).length, '>', 0 );
+            }
+        }
+    });
+})();
+// コンビネーション - デフォルト country 値つき
+// area プルダウンのみ存在
+(function (){
+    new ABROAD.UI.Places.Pulldown({
+        area: {
+            id: 'combo-ab-area-sel-7',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default country2 - area' );
+                is( $( '#combo-ab-area-sel-7' ).val(), 'EUR' );
+            }
+        },
+        country: {
+            id: 'combo-ab-country-sel-7',
+            val: 'BE',
+            on_update_hook: function ( success ){
+                ok( success, 'combo - with default country2 - country' );
+                is( $( '#combo-ab-country-sel-7' ).length, 0 );
+            }
+        }
+    });
+})();
+</script></pre>
+</body>
+</html>

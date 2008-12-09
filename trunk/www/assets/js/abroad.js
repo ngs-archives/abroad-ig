@@ -38,6 +38,7 @@ var ABROAD = {
 		tabs = new gadgets.TabSet(MODULE_ID,TABNAMES[prefs.getInt("tab")||0]);
 		$.each(TABNAMES,function(i){ tabs.addTab(this,DIV_IDS[i],CALLBACKS[i]); });
 		function showForm() {
+			
 		}
 		function showResult() {
 			

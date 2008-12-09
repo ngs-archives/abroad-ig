@@ -1,0 +1,151 @@
+<html>
+<head>
+<script type="text/javascript" src="./js/JSAN.js"></script>
+<script type="text/javascript" src="../docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <select id="sample-sel"></select>
+    <select id="sample-sel-2"></select>
+    <select id="sample-sel-3" name="xxx"></select>
+    <select id="sample-sel-4"></select>
+    <select id="sample-sel-5"></select>
+    <select id="sample-sel-6"></select>
+</div>
+<pre id="test"><script>
+
+JSAN.use( "Test.More" );
+plan({ tests: 41 });
+
+is( typeof Recruit, 'function' );
+is( typeof Recruit.UI, 'function' );
+is( typeof Recruit.UI.Base, 'function' );
+is( typeof Recruit.UI.Base.Pulldown, 'function' );
+
+// define sample subclass for testing
+MyPull = Class.create( Recruit.UI.Base.Pulldown, {
+    _get_def_props: function (){
+        return {
+            id    : 'sample-sel',
+            label : 'ほげ',
+            name  : 'sample-name'
+        };
+    },
+    get_selections: function (){
+        return {
+            'dog' : '犬',
+            'cat' : '猫',
+            'hog' : '猪'
+        };
+    },
+    _create_option_label: function ( val ){
+        return val + '様';
+    }
+});
+
+// 正常系 - 基本
+(function (){
+    var mp = new MyPull();
+    ok( mp );
+    is( mp.is_error, false );
+    var elm = $( '#sample-sel' );
+    is( elm.attr( 'name' ), 'sample-name' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 4 );
+    is( $( opt[0] ).val(), '' );
+    is( $( opt[1] ).val(), 'dog' );
+    is( $( opt[2] ).val(), 'cat' );
+    is( $( opt[3] ).val(), 'hog' );
+    is( $( opt[0] ).text(), '指定なし' );
+    is( $( opt[1] ).text(), '犬様' );
+    is( $( opt[2] ).text(), '猫様' );
+    is( $( opt[3] ).text(), '猪様' );
+})();
+// 正常系 - オプション指定
+(function (){
+    var mp = new MyPull({
+        id: 'sample-sel-2',
+        name: 'sample-name-2',
+        first_opt_text: '無いよ',
+        label: 'ふが',
+        val: 'cat'
+    });
+    ok( mp );
+    is( mp.is_error, false );
+    is( mp.label, 'ふが' );
+    var elm = $( '#sample-sel-2' );
+    is( elm.attr( 'name' ), 'sample-name-2' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 4 );
+    is( $( opt[0] ).text(), '無いよ' );
+    is( elm.val(), 'cat' );
+})();
+(function (){
+    // name が既にある場合は上書きしない
+    var mp = new MyPull({
+        id   : 'sample-sel-3',
+        name : 'sample-name-3'
+    });
+    ok( mp );
+    is( mp.is_error, false );
+    var elm = $( '#sample-sel-3' );
+    is( elm.attr( 'name' ), 'xxx' );
+})();
+(function (){
+    // dont_update_ui = true ならプルダウン初期化はしない
+    var mp = new MyPull({
+        id   : 'sample-sel-4',
+        dont_update_ui : true
+    });
+    ok( mp );
+    is( mp.is_error, false );
+    var elm = $( '#sample-sel-4' );
+    is( elm.find( 'option' ).length, 1 );
+})();
+// 正常系 - on_update_hook の動作確認
+(function (){
+    var mp = new MyPull({
+        id: 'sample-sel-5',
+        on_update_hook: function (){
+            ok( this, 'on_update_hook' );
+            is( this.elm[0], $( '#sample-sel-5' )[0] );
+        }
+    });
+    ok( mp );
+    is( mp.is_error, false );
+})();
+// 正常系 - get_current_stat の動作確認
+(function (){
+    var mp = new MyPull({
+        id: 'sample-sel-6',
+        on_update_hook: function (){
+            ok( this, 'get_current_stat' );
+            this.elm.val( 'cat' ); // 猫を選択状態に
+            var s = this.get_current_stat();
+            isDeeply( s, {
+                val: 'cat',
+                name: 'sample-name',
+                list: [
+                    { val: 'dog', text: '犬様' },
+                    { val: 'cat', text: '猫様' },
+                    { val: 'hog', text: '猪様' },
+                ]
+            });
+        }
+    });
+    ok( mp );
+    is( mp.is_error, false );
+})();
+
+// 異常系
+(function (){
+    var mp = new MyPull({ id: 'gagagagga' });
+    ok( mp );
+    is( mp.is_error, true );
+    ok( mp.error_msg.match( /HTML要素が見つかりません/ ) );
+    ok( mp.error_msg.match( /ほげ/ ) );
+})();
+</script></pre>
+</body>
+</html>

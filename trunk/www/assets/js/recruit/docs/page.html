@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ページング - 共通系 - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<style type="text/css">
+#rui-result-1, #rui-result-2, #rui-result-3 {
+    margin: 0 30px;
+    font-size: 0.7em;
+}
+</style>
+<script type="text/javascript" src="js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript">
+var api_key = 'a450fa593ee3f2a4';
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">ページング</a></h1>
+        <p>共通系 - Recruit.UI.Page - by Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; <a href="./">共通系</a>
+        &gt; ページング
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p>AJAXページにて、APIから取得したデータのページングUIを作成する際、「全ページ数」「現ページ番号」「前ページへのリンクは必要か？」等の情報を自動算出してくれるモジュール。JSON/JSONPレスポンスオブジェクトをそのままコンストラクタに渡すだけで使えるお手軽さ。独自のページングナビゲーションを作成する際の手助けになります。</p>
+    <p>* より簡単にページングUIを自動生成させたい場合は<a
+    href="page.simple.html">こちらの Recruit.UI.Page.Simple モジュール</a>の方をご活用くださいませ。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="sample">サンプル</h2>
+    <div class="sample">
+        no sample 
+    </div>
+    <p>直接UIを生成するモジュールでは無いので...</p>
+    <div id="rui-result-1"></div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h2 id="requirement">動作条件</h2>
+    <ul>
+        <li><a href="http://jquery.com/">jQuery</a> v1.2 以降</li>
+        <li>JSONまたはJSONP形式でAPIリクエストするAJAXページである事</li>
+    </ul>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="reuseable-code">簡易なコード例</h2>
+    <pre style="padding:20px"><a
+    href="../samples/page.html">コピペする事で手軽に再利用が可能なコード例はこちら</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h2 id="howto">使い方</h2>
+    <p>下記のように必要なファイルを読み込んだうえで...</p>
+    <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;recruit.ui.js&quot;&gt;&lt;/script&gt;</pre>
+    <p>このように利用します:</p>
+    <pre>function json_request ( start ){
+
+    var api_url = 'http://.../ab-road/tour/v1/'
+        + '?key=...&area=...&start=' + start
+        + 'format=jsonp&callback=?'; // jQuery JSONP おまじない
+
+    $.getJSON( api_url, function ( json ){
+        var page = new Recruit.UI.Page( json );
+        var html = '';
+        if( page.previous_page() ){
+            // 前のページへのリンクを作成
+        }
+        html += '全' + page.total_pages() + 'ページ';
+        if( page.next_page() ){
+            // 次のページへのリンクを作成
+        }
+        //
+        // この辺りで検索結果一覧の表示処理を書く
+        //
+    });
+}</pre> 
+    <p>page.total_pages() や page.previous_page()
+    等、ページングに必要な情報を自動計算してくれるメソッド一式が提供されるため、実際のコーディング量を減らす事ができます。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="options">利用可能メソッド</h2>
+    <h3 id="opt-a">コンストラクタ</h3>
+    <p>コンストラクタの第一引数に Recruit Webサービス から取得した JSON / JSONP レスポンスオブジェクトを渡す事で、下記メソッドによる情報取得が可能になります:</p>
+    <pre>$.getJSON( api_url, function ( json ){
+        var page = new Recruit.UI.Page( json );
+    }</pre>
+    <p>また第二引数にて一覧の表示件数 - Recruit Webサービスでのパラメータ
+    count の値 - を渡す必要もあります。省略した際はデフォルト値 10
+    が使われます。</p>
+    <pre>$.getJSON( api_url, function ( json ){
+    // 1ページ100件表示の場合
+    var page = new Recruit.UI.Page( json, 100 ); 
+}</pre>
+    <p>* Recruit Webサービスが返すAPIレスポンスに count
+    の値を含ませる事で、この第二引数を不要にする事ができるのですが...
+    今後の改修をお待ちくださいませ。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-b">基本的な情報を取得する</h3>
+    <p>このモジュールが提供するメソッドは以下の通りです:</p>
+    <table class="desc">
+        <tr>
+        <td class="term">メソッド名</td>
+        <td style="font-size:0.8em">例</td>
+        <td style="font-size:0.8em">解説</td>
+        </tr>
+        <tr>
+        <td class="term">total_entries()</td>
+        <td style="font-size:0.8em">210</td>
+        <td style="font-size:0.8em">全アイテム件数</td>
+        </tr>
+        <tr>
+        <td class="term">entries_per_page()</td>
+        <td style="font-size:0.8em">10</td>
+        <td style="font-size:0.8em">ページ毎表示件数</td>
+        </tr>
+        <tr>
+        <td class="term">current_page()</td>
+        <td style="font-size:0.8em">5</td>
+        <td style="font-size:0.8em">現在ページ番号</td>
+        </tr>
+        <tr>
+        <td class="term">entries_on_this_page()</td>
+        <td style="font-size:0.8em">10</td>
+        <td style="font-size:0.8em">現在表示中のアイテム件数</td>
+        </tr>
+        <tr>
+        <td class="term">last_page()</td>
+        <td style="font-size:0.8em">12</td>
+        <td style="font-size:0.8em">最終ページ番号</td>
+        </tr>
+        <tr>
+        <td class="term">first_page()</td>
+        <td style="font-size:0.8em">1</td>
+        <td style="font-size:0.8em">最初のページ番号(常に1)</td>
+        </tr>
+        <tr>
+        <td class="term">first()</td>
+        <td style="font-size:0.8em">11</td>
+        <td style="font-size:0.8em">現ページの最初のアイテム番号</td>
+        </tr>
+        <tr>
+        <td class="term">last()</td>
+        <td style="font-size:0.8em">21</td>
+        <td style="font-size:0.8em">現ページの最後のアイテム番号</td>
+        </tr>
+        <tr>
+        <td class="term">previous_page()</td>
+        <td style="font-size:0.8em">1</td>
+        <td style="font-size:0.8em">前ページ番号 (無い場合はundefined)</td>
+        </tr>
+        <tr>
+        <td class="term">next_page()</td>
+        <td style="font-size:0.8em">3</td>
+        <td style="font-size:0.8em">次ページ番号 (無い場合はundefined)</td>
+        </tr>
+    </table>
+    <p>JSANに登録されているJavascriptライブラリ - Data.Page -
+    を元に作られたモジュールですので、各メソッドの詳細な使い方については同
+    <a
+    href="http://openjsan.org/doc/b/ba/bashi/Data/Page/0.02/lib/Data/Page.html"> Data.Page のドキュメント</a>を参照してください。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-c">APIに渡すパラメータを自動生成する</h3>
+    <p><strong>page_param()</strong></p>
+    <p>第一引数に任意のページ番号 (数値)
+    を渡す事により、以下のような構造体を取得する事ができます。これら情報はそのままAPIに渡すパラメータになっている為、AJAXなページング機能の実装を簡略化することができます。</p>
+    <pre>$.getJSON( api_url, function ( json ){
+    var page = new Recruit.UI.Page( json ); 
+    var prm = page.page_param( 12 );
+    prm.start;  // 12ページ目用の start 値
+    prm.count;  // count 値
+}</pre>
+    <p><strong>next_page_param() と previous_page_param()</strong></p>
+    <p>同様に、前の・次のページ用のAPIパラメータは以下のメソッドで取得できます:</p>
+    <pre>$.getJSON( api_url, function ( json ){
+    var page = new Recruit.UI.Page( json ); 
+
+    var next_prm = page.next_page_param();
+    next_prm.start;  // 次ページ目用の start 値
+    next_prm.count;  // count 値
+
+    var prev_prm = page.prev_page_param();
+    prev_prm.start;  // 前ページ目用の start 値
+    prev_prm.count;  // count 値
+}</pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#sample">サンプル</a></li>
+    <li><a href="#requirement">動作条件</a></li>
+    <li><a href="#reuseable-code">簡易なコード例</a></li>
+    <li><a href="#howto">使い方</a></li>
+    <li>利用可能メソッド
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li><a href="#opt-a">コンストラクタ</a>
+            <li><a href="#opt-b">基本的な情報を取得する</a>
+            <li><a href="#opt-c">APIに渡すパラメータを自動生成する</a>
+        </ul>
+    </li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/">リクルートWebサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

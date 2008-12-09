@@ -1,0 +1,178 @@
+<html>
+<head>
+<script type="text/javascript" src="../../recruit/tests/js/JSAN.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <select id="ab-dept-sel"></select>
+    <select id="ab-order-sel"></select>
+    <select id="ab-month-sel"></select>
+    <select id="ab-price-min-sel"></select>
+    <select id="ab-price-max-sel"></select>
+    <select id="ab-price-min-sel-2"></select>
+    <select id="ab-price-max-sel-2"></select>
+    <select id="ab-term-min-sel"></select>
+    <select id="ab-term-max-sel"></select>
+    <select id="ab-term-min-sel-2"></select>
+    <select id="ab-term-max-sel-2"></select>
+</div>
+<pre id="test"><script>
+
+JSAN.use( "Test.More" );
+plan({ tests: 77 });
+
+is( typeof ABROAD, 'function' );
+is( typeof ABROAD.UI, 'function' );
+
+// ABROAD.UI.Dept.Pulldown
+(function (){
+    var p = new ABROAD.UI.Dept.Pulldown();
+    ok( p );
+    ok( !p.is_error );
+    is( p.label, '出発地' );
+    var elm = $( '#ab-dept-sel' );
+    is( elm.attr( 'name' ), 'dept' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 6 );
+    is( $( opt[0] ).text(), '指定なし' );
+})();
+
+// ABROAD.UI.Order.Pulldown
+(function (){
+    var p = new ABROAD.UI.Order.Pulldown();
+    ok( p );
+    ok( !p.is_error );
+    is( p.label, '並び順' );
+    var elm = $( '#ab-order-sel' );
+    is( elm.attr( 'name' ), 'order' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 5 );
+    is( $( opt[0] ).text(), '新着順' );
+})();
+
+// ABROAD.UI.Month.Pulldown
+(function (){
+    var p = new ABROAD.UI.Month.Pulldown();
+    ok( p );
+    ok( !p.is_error );
+    is( p.label, '出発月' );
+    var elm = $( '#ab-month-sel' );
+    is( elm.attr( 'name' ), 'ym' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 13 );
+    is( $( opt[0] ).text(), '指定なし' );
+    var d = p.get_selections( 2007, 6 );
+    var arr = [];
+    $.each( d, function (k,v){ arr.push(v) } );
+    is( arr.length, 12 );
+    is( arr[0], '2007年06月' );
+    is( arr[11], '2008年05月' );
+})();
+
+// ABROAD.UI.Price.Min.Pulldown
+(function (){
+    var p = new ABROAD.UI.Price.Min.Pulldown();
+    ok( p );
+    ok( !p.is_error );
+    is( p.label, '価格帯下限' );
+    var elm = $( '#ab-price-min-sel' );
+    is( elm.attr( 'name' ), 'price_min' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 16 );
+    is( $( opt[0] ).text(), '指定なし' );
+    is( $( opt[1] ).val(), 30000 );
+    is( $( opt[15] ).val(), 450000 );
+    is( $( opt[1] ).text(), '3万円以上' );
+    is( $( opt[15] ).text(), '45万円以上' );
+})();
+
+// ABROAD.UI.Price.Max.Pulldown
+(function (){
+    var p = new ABROAD.UI.Price.Max.Pulldown();
+    ok( p );
+    ok( !p.is_error );
+    is( p.label, '価格帯上限' );
+    var elm = $( '#ab-price-max-sel' );
+    is( elm.attr( 'name' ), 'price_max' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 16 );
+    is( $( opt[0] ).text(), '指定なし' );
+    is( $( opt[1] ).val(), 30000 );
+    is( $( opt[15] ).val(), 450000 );
+    is( $( opt[1] ).text(), '3万円以内' );
+    is( $( opt[15] ).text(), '45万円以内' );
+})();
+
+// ABROAD.UI.Price.Pulldown
+(function (){
+    var p = new ABROAD.UI.Price.Pulldown({
+        min : { id: 'ab-price-min-sel-2' },
+        max : { id: 'ab-price-max-sel-2' }
+    });
+    ok( p );
+    var min = p.instances.min;
+    var max = p.instances.max;
+    ok( min );
+    ok( max );
+    is( min.is_error, false );
+    is( max.is_error, false );
+    is( $( '#ab-price-min-sel-2 option' ).length, 16 );
+    is( $( '#ab-price-max-sel-2 option' ).length, 16 );
+})();
+
+// ABROAD.UI.Term.Min.Pulldown
+(function (){
+    var p = new ABROAD.UI.Term.Min.Pulldown();
+    ok( p );
+    ok( !p.is_error );
+    is( p.label, '期間下限' );
+    var elm = $( '#ab-term-min-sel' );
+    is( elm.attr( 'name' ), 'term_min' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 10 );
+    is( $( opt[0] ).text(), '指定なし' );
+    is( $( opt[1] ).val(), 2 );
+    is( $( opt[9] ).val(), 10 );
+    is( $( opt[1] ).text(), '2日以上' );
+    is( $( opt[9] ).text(), '10日以上' );
+})();
+
+// ABROAD.UI.Term.Max.Pulldown
+(function (){
+    var p = new ABROAD.UI.Term.Max.Pulldown();
+    ok( p );
+    ok( !p.is_error );
+    is( p.label, '期間上限' );
+    var elm = $( '#ab-term-max-sel' );
+    is( elm.attr( 'name' ), 'term_max' );
+    var opt = elm.find( 'option' );
+    is( opt.length, 10 );
+    is( $( opt[0] ).text(), '指定なし' );
+    is( $( opt[1] ).val(), 2 );
+    is( $( opt[9] ).val(), 10 );
+    is( $( opt[1] ).text(), '2日以内' );
+    is( $( opt[9] ).text(), '10日以内' );
+})();
+
+// ABROAD.UI.Term.Pulldown
+(function (){
+    var p = new ABROAD.UI.Term.Pulldown({
+        min : { id: 'ab-term-min-sel-2' },
+        max : { id: 'ab-term-max-sel-2' }
+    });
+    ok( p );
+    var min = p.instances.min;
+    var max = p.instances.max;
+    ok( min );
+    ok( max );
+    is( min.is_error, false );
+    is( max.is_error, false );
+    is( $( '#ab-term-min-sel-2 option' ).length, 10 );
+    is( $( '#ab-term-max-sel-2 option' ).length, 10 );
+})();
+</script></pre>
+</body>
+</html>

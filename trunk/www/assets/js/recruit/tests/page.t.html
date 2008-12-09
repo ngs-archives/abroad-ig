@@ -1,0 +1,48 @@
+<html>
+<head>
+<script type="text/javascript" src="./js/JSAN.js"></script>
+<script type="text/javascript" src="../docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+</head>
+<body>
+<pre id="test"><script type="text/javascript">
+
+JSAN.use( "Test.More" );
+plan({ tests: 8 });
+
+is( typeof Recruit, 'function' );
+is( typeof Recruit.UI, 'function' );
+
+// set API key
+Recruit.UI.key = 'a450fa593ee3f2a4';
+
+// define sample subclass for testing
+MyJSONP = Class.create( Recruit.UI.Driver.JSONP, {
+    initialize: function ( $super, hash ){
+        $super( hash );
+        this.url = 'http://webservice.recruit.co.jp/ab-road/tour/v1/';
+    }
+});
+
+// 正常系 - 基本
+(function (){
+    var j = new MyJSONP();
+    var post_func = function ( success, json ){
+        ok( success );
+        is( typeof json, 'object' );
+        p = new Recruit.UI.Page( json );
+        is( p.total_entries(), json.results.results_available );
+        var lastpage = parseInt( json.results.results_available / 10 ) + 1;
+        if( json.results.results_available % 10 == 0 ){ lastpage -= 1 }
+        console.log( json.results.results_available );
+        is( p.last_page(), lastpage );
+
+        isDeeply( p.next_page_param(), { start: 21, count: 10 } );
+        isDeeply( p.previous_page_param(), { start: 1, count: 10 } );
+    };
+    j.prm = $.extend( j.prm, { start: 11, area: 'EUR' } );
+    j.get( post_func );
+})();
+</script></pre>
+</body>
+</html>

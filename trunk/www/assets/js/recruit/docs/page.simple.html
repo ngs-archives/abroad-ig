@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ページング Simple - 共通系 - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<style type="text/css">
+#rui-result-1, #rui-result-2, #rui-result-3 {
+    margin: 0 30px;
+    font-size: 0.7em;
+}
+#rui-page-3 {
+    font-size: 0.7em;
+}
+#rui-page-3 .rui-page-total-count {
+    font-weight: bold;
+    font-size: 1.4em;
+}
+#rui-page-5-2 .rui-page-total {
+    margin-right: 20px;
+}
+#rui-page-5-2 .rui-page-back {
+    margin-right: 10px;
+}
+#rui-page-5-2 .rui-page-next {
+    margin-left: 10px;
+}
+#rui-page-7-2 .rui-page-total {
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+</style>
+<script type="text/javascript" src="js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript">
+var api_key = 'a450fa593ee3f2a4';
+$(function (){
+    example_request();
+});
+
+function example_request ( start ){
+    var api_url = 'http://webservice.recruit.co.jp/ab-road/tour/v1/'
+        + '?key=' + api_key + '&country=BE&start=' + start + '&'
+        + 'format=jsonp&callback=?';
+
+    var tmpl2 = '全<#te>件 (<#fi> - <#li> 件目を表示中) <br /> <span class="rui-page-back"><a href="">back</a> | </span><span class="rui-page-next"><a href="">next</a></span>';
+    var tmpl3 = '<span class="rui-page-back"><a href="">&lt;前へ</a>　</span>' + '<span class="rui-page-next"><a href="">次へ&gt;</a></span>';
+
+    $.getJSON( api_url, function ( json ){
+        if( json.results.error ){
+            alert( json.results.error[0].message );
+            return false;
+        }
+        var page = new Recruit.UI.Page.Simple( json );
+        page.paginate({
+            request: example_request,
+            id: 'rui-page-1',
+            sub_uis: [
+                { id: 'rui-page-2', template: tmpl2 },
+                { id: 'rui-page-3' },
+                { id: 'rui-page-4-top' },
+                { id: 'rui-page-4-bottom', template: tmpl3 },
+                { id: 'rui-page-5', template_type: 'no_space' },
+                { id: 'rui-page-5-2', template_type: 'no_space' },
+                { id: 'rui-page-6', template_type: 'float_right' },
+                { id: 'rui-page-7', template_type: 'float_right_2rows' },
+                { id: 'rui-page-7-2', template_type: 'float_right_2rows' },
+                { id: 'rui-page-8', template_type: 'pulldown' }
+            ]
+        });
+        var list = '<ul>';
+        $.each( json.results.tour, function ( i, itm ){
+            list += '<li>' + itm.title.substr( 0, 20 )
+            + '... </li>';
+        });
+        list += '</ul>';
+        $( '#rui-result-1' ).html( list );
+        $( '#rui-result-2' ).html( list );
+        $( '#rui-result-3' ).html( list );
+    });
+}
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">ページング Simple</a></h1>
+        <p>共通系 - Recruit.UI.Page.Simple - by Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; <a href="./">共通系</a>
+        &gt; ページング Simple
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p>AJAXページにて、APIから取得した検索結果の一覧を表示する際などで必ず必要になる「全*ページ中の*ページ目を表示」「前へ」「次へ」等のユーザーインターフェースを自動的に生成するモジュール。</p>
+    <p>デフォルトでは下記サンプルのようなUIが自動生成されますが、オプションにHTMLを渡す事でレイアウト・デザインを自由にカスタマイズする事も出来ます。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="sample">サンプル</h2>
+    <div class="sample">
+        <div id="rui-page-1"></div>
+    </div>
+    <div id="rui-result-1"></div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h2 id="requirement">動作条件</h2>
+    <ul>
+        <li><a href="http://jquery.com/">jQuery</a> v1.2 以降</li>
+        <li>JSONまたはJSONP形式でAPIリクエストするAJAXページである事</li>
+    </ul>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="reuseable-code">簡易なコード例</h2>
+    <pre style="padding:20px"><a
+    href="../samples/page.simple.html">コピペする事で手軽に再利用が可能なコード例はこちら</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h2 id="howto">使い方</h2>
+    <p>下記のように必要なファイルを読み込んだうえで...</p>
+    <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;recruit.ui.js&quot;&gt;&lt;/script&gt;</pre>
+    <p>ページングUIを表示させたい場所にこのようなHTMLを書き...</p>
+    <pre>&lt;div id=&quot;rui-page&quot;&gt;&lt;/div&gt;</pre>
+    <p>最後にこのようなjavascriptコードを書くことで任意のタイミングでページングUIが自動生成されます。下記コードはWebサービスをJSONP形式でリクエストする例です:</p>
+    <pre>function json_request ( start ){
+
+    var api_url = 'http://.../ab-road/tour/v1/'
+        + '?key=...&area=...&start=' + start
+        + 'format=jsonp&callback=?'; // jQuery JSONP おまじない
+
+    $.getJSON( api_url, function ( json ){
+        var page = new Recruit.UI.Page.Simple( json );
+        page.paginate({
+            request: json_request
+        });
+
+        //
+        // この辺りに検索結果を表示するロジックを書く
+        //
+    });
+}</pre> 
+    <p>このように、APIからデータをリクエストする関数 - json_request() - の第一引数に、ページング情報 - 開始アイテム番号 start - を渡すように実装した上で、page.paginate() に同関数を指定する事で、後はライブラリが画面遷移に必要なロジックをすべて自動実装してくれます。まとめると、動作に必要なのは以下の条件になります:</p>
+    <ol>
+        <li style="margin-bottom:10px">page.paginate() の引数 request に実際APIを叩きに行く関数を指定する事</li>
+        <li style="margin-bottom:10px">同関数の第一引数に各ページの開始アイテム番号(start)を渡せるように記述しておくこと</li>
+        <li style="margin-bottom:10px">アクセスするAPIのURLを生成する際にパラメータ start に引数で受け取った開始アイテム番号をセットすること</li>
+        <li style="margin-bottom:10px">JSONP形式の場合、APIのURLに &quot;callback=?&quot; のパラメータを足しておく事 (jQueryの特殊書式)</li>
+        <li>JSONP形式の場合、jQueryライブラリのバージョン 1.2.x 以降が必要です</li>
+    </ol>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h2 id="options">オプション機能</h2>
+    <h3 id="opt-a">ページングUIのデザインを自由にカスタマイズする</h3>
+    <p>page.paginate() メソッドの引数 template にHTMLを指定する事で、自動生成されるページングのインターフェースをまるごとカスタマイズする事ができます。その際、どの部分を「前へ・次へ」ボタンにするのか、どの部分を「1/12ページ」表示にするかの指定を、以下のようなCSSクラス、および簡単な特殊タグ (template tags) により指定します:</p>
+    <p>CSSクラス:</p>
+    <table class="desc">
+        <tr>
+        <td class="term">.rui-page-back</td>
+        <td style="font-size:0.8em">前ページへの遷移UI。このクラスがついた要素 - div / span / img 等 - の中にあるリンクタグ (&lt;a&gt;タグ) がボタンとして機能するようになります。</td>
+        </tr>
+        <tr>
+        <td class="term">.rui-page-next</td>
+        <td style="font-size:0.8em">次ページへの遷移UI。このクラスがついた要素 - div / span / img 等 - の中にあるリンクタグ (&lt;a&gt;タグ) がボタンとして機能するようになります。</td>
+        </tr>
+    </table>
+    <p>特殊タグ:</p>
+    <table class="desc">
+        <tr>
+        <td class="term">&lt;#te&gt;</td>
+        <td>全件数 (total entries)</td>
+        </tr>
+        <tr>
+        <td class="term">&lt;#cp&gt;</td>
+        <td>現在ページ番号 (current page)</td>
+        </tr>
+        <tr>
+        <td class="term">&lt;#lp&gt;</td>
+        <td>全ページ数 (last page)</td>
+        </tr>
+        <tr>
+        <td class="term">&lt;#fi&gt;</td>
+        <td>ページ最初のアイテム番号 (first item)</td>
+        </tr>
+        <tr>
+        <td class="term">&lt;#fi&gt;</td>
+        <td>ページ最後のアイテム番号 (last item)</td>
+        </tr>
+    </table>
+    <p>デザインカスタマイズのコード例:</p>
+    <pre>var tmpl = '全&lt;#te&gt;件 '
++ '(&lt;#fi&gt; - &lt;#li&gt; 件目を表示中) &lt;br /&gt;'
++ '&lt;span class=&quot;rui-page-back&quot;&gt;&lt;a href=&quot;&quot;&gt;back&lt;/a&gt; | &lt;/span&gt;'
++ '&lt;span class=&quot;rui-page-next&quot;&gt;&lt;a href=&quot;&quot;&gt;next&lt;/a&gt;&lt;/span&gt;';
+
+var page = new Recruit.UI.Page.Simple( json );
+page.paginate({
+    request: json_request,
+    template: tmpl
+});</pre>
+    <p>結果、生成されるUI:</p>
+    <div class="sample">
+        <div id="rui-page-2"></div>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-b">デフォルトUIデザインのCSSクラス設定</h3>
+    <p>引数 template に何も渡さなかった場合のデフォルトUIには、下記の図のように、各要素ごとにCSSクラスが設定されます:</p>
+    <p style="text-align:center"><img src="img/page_css.gif" style="border: 1px solid #DDD;padding:5px"/></p>
+    <p>これを参考に、任意のCSS設定を付与する事である程度表示に変化をつける事が出来ます。以下、CSS例:</p>
+    <pre>#rui-page {
+    font-size: 0.7em;
+}
+#rui-page .rui-page-total-count {
+    font-weight: bold;
+    font-size: 1.4em;
+}</pre>
+    <p>実行結果:</p>
+    <div class="sample">
+        <div id="rui-page-3"></div>
+    </div>
+    <p>これ以上のカスタマイズをするには前項の引数 template によるHTML指定を使ってください。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-d">ページングUIのID値を指定する</h3>
+    <p>デフォルトでは rui-page というID値を持つ要素を探して、そこにページングUIが表示されますが、引数 id に任意のID値を指定する事も出来ます:</p>
+<pre>var page = new Recruit.UI.Page.Simple( json );
+page.paginate({
+    id: 'my-page-ui',
+    request: json_request
+});</pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-e">選択可能なページングUIのデザインテンプレート</h3>
+    <p>page.paginate() メソッドの引数 tmpl_type に下記のタイプIDを指定する事により、あらかじめ用意されたデザインテンプレートの中から任意のものを利用する事ができます。これら以外のデザインを利用したい場合は前述の<a href="#opt-a">「自由にカスタマイズする」</a>の項を参照してください。</p> 
+<pre>var page = new Recruit.UI.Page.Simple( json );
+page.paginate({
+    request: json_request,
+    template_type: 'no_space'
+});</pre>
+    <p>これらテンプレートにはすべて<a href="#opt-b">「デフォルトUIデザインのCSSクラス設定」</a>に定義されているCSSクラスが付与されていますので、追加でデザインを変更することも可能です。</p>
+    <p id="tmpl_list">選択可能な tmpl_type 一覧:</p>
+    <ul>
+        <li><a href="#tmpl_float_right">float_right</a></li>
+        <li><a href="#tmpl_float_right_2rows">float_right_2rows</a></li>
+        <li><a href="#tmpl_pulldown">pulldown</a></li>
+        <li><a href="#tmpl_no_space">no_space</a></li>
+    </ul>
+
+    <p id="tmpl_float_right"><strong>&gt; float_right</strong></p>
+    <p>ページ遷移のナビゲーションが右寄せなUIです。</p>
+    <div class="sample" style="font-size:0.8em">
+        <div id="rui-page-6"></div>
+    </div>
+    <p class="back-to-top"><a href="#tmpl_list">&gt;BACK TO LIST</a></p>
+
+    <p id="tmpl_float_right_2rows"><strong>&gt; float_right_2rows</strong></p>
+    <p>2段構成のナビゲーションUIです。</p>
+    <div class="sample" style="font-size:0.8em">
+        <div id="rui-page-7"></div>
+    </div>
+    <p>間に罫線を引いたりするとしっくり来るUIになるかと思います:</p>
+    <pre>.rui-page-total {
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}</pre>
+    <div class="sample" style="font-size:0.8em">
+        <div id="rui-page-7-2"></div>
+    </div>
+    <p class="back-to-top"><a href="#tmpl_list">&gt;BACK TO LIST</a></p>
+
+    <p id="tmpl_pulldown"><strong>&gt; pulldown</strong></p>
+    <p>プルダウンにて、全ページの中から任意のページにすぐに遷移可能なUIです:</p>
+    <div class="sample">
+        <div id="rui-page-8"></div>
+    </div>
+    <div id="rui-result-3"></div>
+    <p>基本はデフォルトのページングUIを使いつつ、その隣にこのプルダウンを設置してあげたりすると良いですね。</p>
+    <p class="back-to-top"><a href="#tmpl_list">&gt;BACK TO LIST</a></p>
+
+    <p id="tmpl_no_space"><strong>&gt; no_space</strong></p>
+    <p>デフォルトのデザインUIには3箇所に &amp;nbsp;&amp;nbsp; といったタグによってやや強引に要素間のスペースを確保していますが、この no_space はこれら &amp;nbsp; をすべて排除したテンプレートです。よってそのまま使うと要素間が詰まった、使えないUIになりますが、自分でCSSを定義する事により要素間のスペースを自由に設定することが出来ます。</p>
+    <div class="sample" style="font-size:0.8em">
+        <div id="rui-page-5"></div>
+    </div>
+    <p>これに以下のようなCSSをつけると...</p>
+    <pre>.rui-page-total {
+    margin-right: 20px;
+}
+.rui-page-back {
+    margin-right: 10px;
+}
+.rui-page-next {
+    margin-left: 10px;
+}</pre>
+    <p>このように任意の余白調整が可能になります:</p>
+    <div class="sample" style="font-size:0.8em">
+        <div id="rui-page-5-2"></div>
+    </div>
+    <p class="back-to-top"><a href="#tmpl_list">&gt;BACK TO LIST</a></p>
+
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-c">複数個所にページングUIを表示させる</h3>
+    <p>結果一覧の上部にページングUIをひとつ、さらに結果一覧の最下部にも多少表示の異なったUIを追加表示させる事も出来ます。その際は引数 sub_uis に配列の形で二つ目以降のUIを設置したい要素ID値および template / template_type を指定します:</p>
+    <pre>var tmpl = '&lt;span class=&quot;rui-page-back&quot;&gt;&lt;a href=&quot;&quot;&gt;&amp;lt;前へ&lt;/a&gt;　&lt;/span&gt;' + '&lt;span class=&quot;rui-page-next&quot;&gt;&lt;a href=&quot;&quot;&gt;次へ&amp;gt;&lt;/a&gt;&lt;/span&gt;';
+
+var page = new Recruit.UI.Page.Simple( json );
+page.paginate({
+    request: json_request,
+    sub_uis: [
+        { id: 'bottom-page-ui', template: tmpl }
+    ]
+});</pre>
+    <p>実行結果:</p>
+    <div class="sample" style="font-size:0.8em">
+        <div id="rui-page-4-top"></div>
+    </div>
+    <div id="rui-result-2"></div>
+    <div class="sample" style="text-align:right;font-size:0.8em">
+        <div id="rui-page-4-bottom"></div>
+    </div>
+    <p>一覧下部のページングUI (&lt;div&gt;タグ) にID値 bottom-page-ui が振られている形です。なお引数 template に何も指定しなかった場合はデフォルトUIが適応されます。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#sample">サンプル</a></li>
+    <li><a href="#requirement">動作条件</a></li>
+    <li><a href="#reuseable-code">簡易なコード例</a></li>
+    <li><a href="#howto">使い方</a></li>
+    <li>オプション機能
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li><a href="#opt-a">ページングUIのデザインを自由にカスタマイズする</a>
+            <li><a href="#opt-b">デフォルトUIデザインのCSSクラス設定</a></li>
+            <li><a href="#opt-d">ページングUIのID値を指定する</a></li>
+            <li><a href="#opt-e">選択可能なページングUIのデザインテンプレート</a></li>
+            <li><a href="#opt-c">複数個所にページングUIを表示させる</a></li>
+        </ul>
+    </li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/">リクルートWebサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

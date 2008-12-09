@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>例 組み合わせ - エイビーロード - Recruit UI Library</title>
+<link rel="stylesheet" href="use_all.css" type="text/css" />
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    Recruit.UI.Base.Pulldown.first_opt_text = '-';
+
+    new ABROAD.UI.Dept.Pulldown({ val: 'TYO' });
+    new ABROAD.UI.Places.Pulldown();
+    new ABROAD.UI.Month.Pulldown();
+    new ABROAD.UI.Term.Pulldown();
+    new ABROAD.UI.Price.Pulldown();
+    new ABROAD.UI.Order.Pulldown();
+
+    $( '#form-block form' ).submit( function (){
+        jsonp_request();
+        return false;
+    });
+});
+
+function jsonp_request ( start ){
+    if( !start ){ start = 1 }
+    var ruip = $( '#rui-page' ).html( 'loading...' );
+    var ruir = $( '#rui-result' ).empty();
+
+    var url = 'http://webservice.recruit.co.jp/ab-road/tour/v1/?'
+        + 'key=' + Recruit.UI.key + '&format=jsonp&callback=?'
+        + '&start=' + start + '&'
+        + $( '#form-block form' ).formSerialize();
+
+    $.getJSON( url, function ( json ){
+        var res = json.results;
+        // error check
+        if( res.error ){
+            ruip.html( res.error[0].message );
+            return false;
+        }
+        // auto paginate
+        var page = new Recruit.UI.Page.Simple( json );
+        page.paginate({
+            request: jsonp_request
+        });
+        // display results
+        var ol = $( '<ol></ol>' ).attr( 'start', start );
+        $.each( res.tour, function (){
+            var li = $( '<li><a href="' + this.urls.pc + '">'
+                + this.term + '日間 '
+                + this.price.min.replace( /\d{4}$/, '' ) + '万円～ '
+                + this.title.substr( 0, 20 ) + '...</a></li>' );
+            ol.append( li );
+        });
+        ruir.append( ol );
+    });
+}
+</script>
+</head>
+<body>
+<h1>組み合わせ - エイビーロード</h1>
+<div id="form-block">
+<div id="form-block-inner">
+    <form action="">
+        <div class="ui-block">
+            <label>出発地</label>
+            <select id="ab-dept-sel"></select>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>行き先</label>
+            <select id="ab-area-sel"></select>
+        </div>
+        <div class="ui-block" style="margin-bottom:0">
+            <label>&nbsp;</label>
+            <select id="ab-country-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <select id="ab-city-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>出発月</label>
+            <select id="ab-month-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>期間</label>
+            <select id="ab-term-min-sel" class="short"></select> ～
+            <select id="ab-term-max-sel" class="short"></select>
+        </div>
+        <div class="ui-block">
+            <label>価格帯</label>
+            <select id="ab-price-min-sel" class="short"></select> ～
+            <select id="ab-price-max-sel" class="short"></select>
+        </div>
+        <div class="ui-block">
+            <label>キーワード</label>
+            <input type="text" name="keyword"/>
+        </div>
+        <div class="ui-block">
+            <label>並び順</label>
+            <select id="ab-order-sel"></select>
+        </div>
+        <div class="ui-block">
+            <label>&nbsp;</label>
+            <input type="submit" value="検索" />
+        </div>
+        <input type="hidden" name="count" value="10"/>
+    </form>
+</div>
+</div>
+<div id="result-block">
+<div id="result-block-inner">
+    <div id="rui-page"></div>
+    <div id="rui-result"></div>
+</div>
+</div>
+
+</body>
+</html>
