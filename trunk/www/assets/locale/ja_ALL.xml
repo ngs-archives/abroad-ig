@@ -41,6 +41,9 @@
 
 <msg name="tours_available">件のツアーが該当しました。</msg>
 
+<msg name="add_star">スターをつける</msg>
+<msg name="remove_star">スターをはずす</msg>
+
 <!-- ========================================
 
 	Errors
