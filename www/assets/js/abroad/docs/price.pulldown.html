@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>価格帯選択 プルダウン - エイビーロード - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<style type="text/css">
+#bd .cont div.sample select { width: 120px }
+</style>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    new ABROAD.UI.Price.Pulldown();
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">価格帯選択 プルダウン </a></h1>
+        <p>エイビーロード - ABROAD.UI.Price.Pulldown - by Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; <a href="./">エイビーロード</a> &gt;
+        価格帯選択 プルダウン
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p><a href="http://webservice.recruit.co.jp/ab-road/reference.html#a1to">AB-ROAD 海外旅行検索API</a>
+    に検索クエリ「価格帯上限」および「価格帯下限」パラメータを渡す事で、価格帯によるツアーの絞込みができます。これは、その上限・下限価格を指定する為のプルダウンUIを簡単に生成するためのモジュールです。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="sample">サンプル</h2>
+    <div class="sample">
+        <select id="ab-price-min-sel"></select> ー
+        <select id="ab-price-max-sel"></select>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="requirement">動作条件</h2>
+    <ul>
+        <li><a href="http://jquery.com/">jQuery</a> v1.0 以降</li>
+    </ul>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="reuseable-code">簡易なコード例</h2>
+    <pre style="padding:20px"><a
+    href="../samples/price.pulldown.html">コピペする事で手軽に再利用が可能なコード例はこちら</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="howto">使い方</h2>
+    <h3 id="howto-basic">基本</h3>
+    <p>下記のように必要なファイルを読み込んだうえで...</p>
+    <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;recruit.ui.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;abroad.ui.js&quot;&gt;&lt;/script&gt;</pre>
+    <p>プルダウンを表示させたい場所にこのようなHTMLを書き...</p>
+    <pre>&lt;select id=&quot;ab-price-min-sel&quot;&gt;&lt;/select&gt;
+&lt;select id=&quot;ab-price-max-sel&quot;&gt;&lt;/select&gt;</pre>
+    <p>* name属性を設定せずとも、自動で name=&quot;price_min&quot; および
+    &quot;price_max&quot; が付与されます。</p>
+    <p>最後にこのようなjavascriptコードを書くことで上限と下限、あわせて<strong style="color:#880000;font-size:1.2em">2つのプルダウン</strong> が自動生成されます。</p>
+    <pre>new ABROAD.UI.Price.Pulldown();</pre> 
+    <p>jQueryを使って、ページ表示と同時にプルダウン生成したい場合はこちら:</p>
+    <pre>$( function(){
+    new ABROAD.UI.Price.Pulldown();
+});</pre> 
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="howto-either">上限および下限どちらかだけを使いたい</h3>
+    <pre>&lt;select id=&quot;ab-price-min-sel&quot;&gt;&lt;/select&gt;
+&lt;!--//
+&lt;select id=&quot;ab-price-max-sel&quot;&gt;&lt;/select&gt;
+//--&gt;</pre>
+    <p>片方だけのプルダウンを使いたい場合は上記のように、不要な方のSELECTタグを削除してしまえばOKです。対象のエレメントが無い場合、単純に無視される実装になっています。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="options">オプション機能</h2>
+    <p>以下に紹介するオプション引数はこのような形でそれぞれ「上限用」「下限用」を区別する形で書きます。</p>
+    <pre>new ABROAD.UI.Price.Pulldown({
+    'max' : { id: 'my-max-sel' },
+    'min' : { id: 'my-min-sel' }
+});</pre>
+    <p>下記リンク先で記述されているオプション引数は、すべて上記の形でmax用なのかmin用なのかを指定してください。</p>
+    <p><a href="dept.pulldown.html#options">利用可能なオプション機能はこちら。</a></p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#sample">サンプル</a></li>
+    <li><a href="#requirement">動作条件</a></li>
+    <li><a href="#reuseable-code">簡易なコード例</a></li>
+    <li>使い方</li>
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li><a href="#howto-basic">基本</a>
+            <li><a href="#howto-either">上限および下限どちらかだけを使いたい</a>
+        </ul>
+    <li><a href="#options">オプション機能</a></li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/ab-road/">エイビーロード WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

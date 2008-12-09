@@ -1,0 +1,170 @@
+<html>
+<head>
+<script type="text/javascript" src="./js/JSAN.js"></script>
+<script type="text/javascript" src="../docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+</head>
+<body>
+<pre id="test"><script type="text/javascript">
+
+JSAN.use( "Test.More" );
+plan({ tests: 53 });
+
+is( typeof Recruit, 'function' );
+is( typeof Recruit.UI, 'function' );
+is( typeof Recruit.UI.Base, 'function' );
+
+// set API key
+Recruit.UI.key = 'a450fa593ee3f2a4';
+
+// define sample subclass for testing
+MyJSONP = Class.create( Recruit.UI.Driver.JSONP, {
+    initialize: function ( $super, hash ){
+        $super( hash );
+        this.url = 'http://webservice.recruit.co.jp/ab-road/area/v1/';
+    },
+    _get_onload: function ( json ){
+        var _self = this;
+        $.each( json.results.area, function (i,d){
+            _self.results[ d.code ] = d;
+        });
+    }
+});
+
+// 正常系 - 基本
+(function (){
+    var j = new MyJSONP();
+    // 1回目のget
+    var post_func1 = function ( success, json, hash ){
+        ok( success );
+        is( hash.inc, 5, '1st' );
+        ok( j.results.AAS );
+        is( j.results.AAS.name, 'アジア' );
+        is( j.errstr, '' );
+
+        // 2回目のgetはキャッシュを見る
+        j.results.AAS.name = 'ほげ';
+        var post_func2 = function ( success, json, hash ){
+            ok( success );
+            is( hash.inc, 5, '2nd' );
+            ok( j.results.AAS );
+            is( j.results.AAS.name, 'ほげ' );
+            is( j.errstr, '' );
+
+            // 3回目のget (別のクエリ、非キャッシュ)
+            var post_func3 = function ( success, json, hash ){
+                ok( success );
+                is( hash.inc, 10, '3rd' );
+                ok( j.results.AAS );
+                is( j.results.AAS.name, 'アジア' );
+                is( j.errstr, '' );
+            };
+            j.get( post_func3, { inc:10 } );
+        };
+        j.get( post_func2, { inc:5 } );
+    };
+    j.get( post_func1, { inc:5 } );
+})();
+// 正常系 - キャッシュ disble 機能
+(function (){
+    var j = new MyJSONP({ disable_cache: true });
+    // 1回目のget
+    var post_func1 = function ( success, json, hash ){
+        ok( success );
+        is( hash.inc, 5, '1st' );
+        ok( j.results.AAS );
+        is( j.results.AAS.name, 'アジア' );
+        is( j.errstr, '' );
+
+        // 2回目のgetもキャッシュは見ない
+        j.results.AAS.name = 'ほげ';
+        var post_func2 = function ( success, json, hash ){
+            ok( success );
+            is( hash.inc, 5, '2nd' );
+            ok( j.results.AAS );
+            is( j.results.AAS.name, 'アジア' );
+            is( j.errstr, '' );
+        };
+        j.get( post_func2, { inc:5 } );
+    };
+    j.get( post_func1, { inc:5 } );
+})();
+// 正常系 - on_update_hook のテスト
+(function (){
+    var j = new MyJSONP({
+        on_update_hook: function ( success, json ){
+            ok( success );
+            ok( json.results.area.length > 0 );
+            ok( this.results.AAS, 'on_update_hook' );
+            is( this.results.AAS.name, 'アジア' );
+            is( this.errstr, '' );
+        }
+    });
+    j.get();
+})();
+// 正常系 - ドメイン省略 url のテスト
+(function (){
+    var j = new MyJSONP({
+        on_update_hook: function ( success, json ){
+            ok( success );
+            ok( json.results.area.length > 0 );
+            ok( this.results.AAS, 'no domain url' );
+            is( this.results.AAS.name, 'アジア' );
+            is( this.errstr, '' );
+        }
+    });
+    j.url = '/ab-road/area/v1';
+    j.get();
+})();
+(function (){
+    var j = new MyJSONP({
+        on_update_hook: function ( success, json ){
+            ok( success );
+            ok( json.results.area.length > 0 );
+            ok( this.results.AAS, 'no domain url - without root slash' );
+            is( this.results.AAS.name, 'アジア' );
+            is( this.errstr, '' );
+        }
+    });
+    j.url = 'ab-road/area/v1/';
+    j.get();
+})();
+// 正常系 - constructor 初期値指定
+(function (){
+    var j = new Recruit.UI.Driver.JSONP({
+        url : 'http://hoge.com',
+        prm : {
+            key : 'fuga',
+            foo : 1
+        }
+    });
+    is( j.url, 'http://hoge.com' );
+    is( j.prm.key, 'fuga' );
+    is( j.prm.foo, 1 );
+    is( j.prm.count, 100 );
+})();
+// 正常系 - Adobe AIR の場合は json で
+(function (){
+    window.runtime = {};
+    var j = new MyJSONP();
+    var url = j._fix_url( j.url );
+    is( j.use_jsonp, false, 'adobe air' );
+    is( j.prm.format, 'json' );
+    ok( !url.match( /callback=\?/ ) );
+    window.runtime = undefined;
+})();
+
+// 異常系
+(function (){
+    var j = new MyJSONP();
+    j.prm.key = '';
+    var post_func = function ( success, json, hash ){
+        ok( !success );
+        is( hash.inc, 5, 'error' );
+        is( j.errstr, 'keyは必須パラメーターです' );
+    };
+    j.get( post_func, { inc:5 } );
+})();
+</script></pre>
+</body>
+</html>

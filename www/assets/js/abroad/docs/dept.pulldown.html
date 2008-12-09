@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>出発地選択 プルダウン - エイビーロード -  リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<style type="text/css">
+</style>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    new ABROAD.UI.Dept.Pulldown({ id: 'ab-dept-sel1' });
+    new ABROAD.UI.Dept.Pulldown({ id: 'ab-dept-sel2',
+        first_opt_text: '選択してください'  });
+    new ABROAD.UI.Dept.Pulldown({ id: 'ab-dept-sel3', val: 'NGO' });
+    new ABROAD.UI.Dept.Pulldown({ id: 'ab-dept-sel4',
+        name: 'my-dept-name' });
+
+    $( '#sample-form-name' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">出発地選択 プルダウン</a></h1>
+        <p>エイビーロード - ABROAD.UI.Dept.Pulldown - by Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; <a href="./">エイビーロード</a> &gt;
+        出発地選択 プルダウン
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p><a href="http://webservice.recruit.co.jp/ab-road/reference.html#a1to">AB-ROAD 海外旅行検索API</a>
+    に検索クエリ「出発地」パラメータを渡す事で、「関西から出発するツアーのみを検索」といった絞込みができます。これは、その出発地を選択する為のプルダウンUIを簡単に生成するためのモジュールです。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="sample">サンプル</h2>
+    <div class="sample">
+        <select id="ab-dept-sel1"></select>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="requirement">動作条件</h2>
+    <ul>
+        <li><a href="http://jquery.com/">jQuery</a> v1.0 以降</li>
+    </ul>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="reuseable-code">簡易なコード例</h2>
+    <pre style="padding:20px"><a
+    href="../samples/dept.pulldown.html">コピペする事で手軽に再利用が可能なコード例はこちら</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="howto">使い方</h2>
+    <p>下記のように必要なファイルを読み込んだうえで...</p>
+    <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;recruit.ui.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;abroad.ui.js&quot;&gt;&lt;/script&gt;</pre>
+    <p>プルダウンを表示させたい場所にこのようなHTMLを書き...</p>
+    <pre>&lt;select id=&quot;ab-dept-sel&quot;&gt;&lt;/select&gt;</pre>
+    <p>* name属性を設定せずとも、自動で name=&quot;dept&quot; が付与されます。</p>
+    <p>最後にこのようなjavascriptコードを書くことでプルダウンが自動生成されます。</p>
+    <pre>new ABROAD.UI.Dept.Pulldown();</pre> 
+    <p>jQueryを使って、ページ表示と同時にプルダウン生成したい場合はこちら:</p>
+    <pre>$( function(){
+    new ABROAD.UI.Dept.Pulldown();
+});</pre> 
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="options">オプション機能</h2>
+    <h3 id="opt-a">プルダウンのid値を指定したい</h3>
+    <p>デフォルトでは id="ab-dept-sel" のプルダウン(SELECTタグ)を探しにいきますが、これを任意のid値で指定したい場合は以下のように書きます:
+    <pre>new ABROAD.UI.Dept.Pulldown({
+    id: 'my-own-dept'
+});</pre> 
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-b">プルダウンの初期値 "指定なし" を別の文言に変えたい</h3>
+    <p>以下のように指定する事で文言を変えられます:</p>
+    <pre>new ABROAD.UI.Dept.Pulldown({
+    first_opt_text: '選択してください' 
+});</pre> 
+    <div class="sample">
+        <select id="ab-dept-sel2"></select>
+    </div>
+    <h4 id="opt-b-2">ほかのプルダウンもまとめて、一括で指定したい</h4>
+    <p>以下のように、クラス変数 Recruit.UI.Base.Pulldown.first_opt_text
+    に値を設定することで、以降すべてのプルダウン系のUIライブラリに対して有効になります:</p>
+    <pre>Recruit.UI.Base.Pulldown.first_opt_text = '選択してください';
+new ABROAD.UI.Dept.Pulldown();
+new ABROAD.UI.Order.Pulldown();
+...</pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-c">プルダウンの初期値を指定</h3>
+    <p>各プルダウンに予めいずれかの値を最初から設定しておきたい場合は以下のように書きます:</p>
+    <pre>new ABROAD.UI.Dept.Pulldown({
+    val: 'NGO'
+});</pre> 
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <select id="ab-dept-sel3"></select>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+
+    <h3 id="opt-d">プルダウンのname値を指定</h3>
+    <p>デフォルトでは name=&quot;dept&quot; が付与されますが、これを任意の値に指定する事が出来ます:</p>
+    <pre>new ABROAD.UI.Dept.Pulldown({
+    name: 'my-dept-name'
+});</pre> 
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <form id="sample-form-name" action="">
+        <select id="ab-dept-sel4"></select> <input type="submit" value="値を確認" />
+    </form>
+    </div>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-e">選択肢が刷新されたタイミングで任意の処理を実行したい</h3>
+    <p><strong>プルダウンの選択肢が刷新された直後</strong>のタイミング (＝プルダウン初期化のタイミング) で任意の処理を実行したい場合は、以下のようにオプション指定 - on_update_hook - に任意の処理を記述した無名関数を設定します:</p>
+    <pre>ABROAD.UI.Dept.Pulldown({
+    on_update_hook: function (){
+        alert( 'pulldown initialized' );
+    }
+});</pre>
+    <p>この時、以下のプロパティから各種状態を取得できます:</p>
+    <table class="desc" style="font-size:0.8em">
+        <tr>
+        <td class="term">this.get_current_stat()</td>
+        <td>取得可能な情報は下記 <a href="opt-f">&quot;現在のプルダウン内容を取得&quot;</a> の項を参照</td>
+        </tr>
+        <tr>
+        <td class="term">this.elm</td>
+        <td>プルダウン要素の jQuery オブジェクト。$( '#ab-dept-sel' ) の戻り値と同じ。</td>
+        </tr>
+    </table>
+    <pre>ABROAD.UI.Dept.Pulldown({
+    on_update_hook: function (){
+        var obj = this.get_current_stat();
+        alert( obj.list.length );  // 選択肢の数
+    }
+});</pre>
+    <p>簡単なサンプルはこちら:</p>
+    <pre><a href="../samples/dept.pulldown.on_update_hook.html">on_update_hook のサンプルコード</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-f">現在のプルダウン内容を取得</h3>
+    <p>get_current_stat() メソッドにて、プルダウン選択肢の値とラベルをリストで取得したり、現在選択中の値を取得する等、プルダウン情報を別途加工する際に便利な情報を取得できます:</p>
+    <pre>var p = ABROAD.UI.Dept.Pulldown();
+var obj = p.get_current_stat()</pre>
+    <p>この時の戻り値 (object) の中身は以下の通りです:</p>
+    <table class="desc" style="font-size:0.8em">
+        <tr>
+        <td class="term">obj.name</td>
+        <td>プルダウンのname属性 - 例) ab-dept-sel</td>
+        </tr>
+        <tr>
+        <td class="term">obj.val</td>
+        <td>現在選択中の値 - 例) NGO</td>
+        </tr>
+        <tr>
+        <td class="term">obj.list</td>
+        <td>プルダウン選択肢の値と名称を含んだ Array オブジェクト。Array 内の各要素は val (値) と text (名称) プロパティを保持 - 例)<br/>obj.list[0].val // TYO<br/>obj.list[0].text // 東京</td>
+        </tr>
+    </table>
+    <p>簡単なサンプルはこちら:</p>
+    <pre><a href="../samples/dept.pulldown.on_update_hook.html">get_current_stat() のサンプルコード</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#sample">サンプル</a></li>
+    <li><a href="#requirement">動作条件</a></li>
+    <li><a href="#reuseable-code">簡易なコード例</a></li>
+    <li><a href="#howto">使い方</a></li>
+    <li>オプション機能
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li><a href="#opt-a">プルダウンのid値を指定したい</a>
+            <li><a href="#opt-b">プルダウンの初期値 "指定なし" を別の文言に変えたい</a>
+            <li><a href="#opt-c">プルダウンの初期値を指定</a>
+            <li><a href="#opt-d">プルダウンのname値を指定</a>
+            <li><a href="#opt-e">選択肢が刷新されたタイミングで任意の処理を実行したい</a>
+            <li><a href="#opt-f">現在のプルダウン内容を取得</a>
+        </ul>
+    </li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/ab-road/">エイビーロード WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+</body>
+
+</html>

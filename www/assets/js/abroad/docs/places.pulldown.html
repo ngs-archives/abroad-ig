@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>エリア選択 プルダウン - エイビーロード - リクルート WEBサービス UI Library</title>
+<link rel="stylesheet" href="../../recruit/docs/css/yui.reset-fonts-grids-base.css" type="text/css" />
+<link rel="stylesheet" href="../../recruit/docs/css/style.css" type="text/css" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    Recruit.UI.key = 'a450fa593ee3f2a4';
+    new ABROAD.UI.Places.Pulldown();
+    new ABROAD.UI.Places.Pulldown({
+        area:    {
+            id: 'ab-area-sel2',
+            first_opt_text: '選択してください'
+        },
+        country:    {
+            id: 'ab-country-sel2',
+            first_opt_text: '国を選択してください'
+        },
+        city:    {
+            id: 'ab-city-sel2',
+            first_opt_text: '都市を選択してください'
+        }
+    });
+    new ABROAD.UI.Places.Pulldown({
+        area:    {
+            id: 'ab-area-sel3',
+            with_tour_count: true
+        },
+        country:    {
+            id: 'ab-country-sel3',
+            with_tour_count: true
+        },
+        city:    {
+            id: 'ab-city-sel3',
+            with_tour_count: true
+        }
+    });
+    new ABROAD.UI.Places.Pulldown({
+        area:    {
+            id: 'ab-area-sel4'
+        },
+        country:    {
+            id: 'ab-country-sel4'
+        },
+        city:    {
+            id: 'ab-city-sel4',
+            val: 'NYC'
+        }
+    });
+});
+</script>
+</head>
+<body>
+<div id="doc" class="yui-t4">                   
+<div id="hd">
+    <div id="hd-logo">
+        <a href="http://webservice.recruit.co.jp/">
+        <img src="../../recruit/docs/img/rws_logo.gif" border="0"/></a>
+    </div>
+    <div id="hd-main">
+        <h1 id="top"><a href="../../index.html">エリア選択 プルダウン </a></h1>
+        <p>エイビーロード - ABROAD.UI.Places.Drilldown - by Recruit Web Service UI Library</p>
+    </div>
+</div><!-- end hd -->
+
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b cont">
+    <div class="breadcrumb">
+        <a href="../../">TOP</a> &gt; <a href="./">エイビーロード</a> &gt;
+        エリア選択 プルダウン
+    </div>
+    <h2 id="synopsis">概要</h2>
+    <p>エリア/国/都市などの地域を選択する為のユーザーインターフェースを自動生成するモジュール。相互連動更新する、一般的なプルダウンUIを提供。</p> 
+    <p>必要な選択肢情報を、必要なタイミングで動的に取得/生成する為、大量の都市マスタデータ等を事前に読み込む必要無く、快適なUIを提供する事ができます。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="sample">サンプル</h2>
+    <div class="sample">
+        <span class="lbl">エリア:</span> <select id="ab-area-sel"></select><br style="clear:both"/>
+        <span class="lbl">国:</span>     <select id="ab-country-sel"></select><br  style="clear:both"/>
+        <span class="lbl">都市:</span>   <select id="ab-city-sel"></select>
+        </form>
+    </div>
+    <p>エリアを選ぶと国の選択肢が、国を選ぶと都市の選択肢が、それぞれ該当地域のものに自動的に切り替わります。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="requirement">動作条件</h2>
+    <ul>
+        <li><a href="http://jquery.com/">jQuery</a> v1.2 以降</li>
+    </ul>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="reuseable-code">簡易なコード例</h2>
+    <pre style="padding:20px"><a
+    href="../samples/places.pulldown.html">コピペする事で手軽に再利用が可能なコード例はこちら</a></pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="howto">使い方</h2>
+    <p>下記のように必要なファイルを読み込んだうえで...</p>
+    <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;recruit.ui.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;abroad.ui.js&quot;&gt;&lt;/script&gt;</pre>
+    <p>プルダウンを表示させたい場所にこのようなHTMLを書き...</p>
+    <pre>&lt;select id=&quot;ab-area-sel&quot;&gt;&lt;/select&gt;<br />&lt;select id=&quot;ab-country-sel&quot;&gt;&lt;/select&gt;<br />&lt;select id=&quot;ab-city-sel&quot;&gt;&lt;/select&gt;</pre>
+    <p>最後にこのようなjavascriptコードを書くことで任意のタイミングでプルダウンが自動生成されます。</p>
+    <pre>Recruit.UI.key = 'ご自身のAPIキー';
+new ABROAD.UI.Places.Pulldown();</pre> 
+    <p>jQueryを使って、ページ表示と同時にプルダウン生成したい場合はこちら:</p>
+    <pre>$(function (){
+    Recruit.UI.key = 'ご自身のAPIキー';
+    new ABROAD.UI.Places.Pulldown();
+});</pre> 
+    <p>ご自身のAPIキーをお持ちでない方は<a
+        href="http://webservice.recruit.co.jp/register">こちらの画面からリクルートWEBサービスに登録する事で取得する</a>事ができます。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h2 id="options">オプション機能</h2>
+    <p>他のプルダウン系UIと同じく、コンストラクタの引数にパラメーターを与える事でオプション機能が利用できます。その際には以下の例に示すように、エリア・国・都市 - 3つのプルダウンそれぞれが個別のパラメーター空間を持つ形になります。</p>
+    <h3 id="opt-a">各プルダウンのid値を指定したい</h3>
+    <p>デフォルトでは &quot;ab-area-sel&quot;
+    等のid値でHTML中のプルダウン(SELECTタグ)を探しにいきますが、これを任意のid値で指定したい場合は以下のように書きます:</p>
+    <pre>new ABROAD.UI.Places.Pulldown({
+    area:    { id: 'my-area' },
+    country: { id: 'my-country' },
+    city:    { id: 'my-city' }
+});</pre>
+    <p>いずれかひとつだけの指定ももちろん可能です。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-b">プルダウンの初期値 &quot;指定なし&quot; を別の文言に変えたい</h3>
+    <p>以下のように指定する事で文言を変えられます:</p>
+    <pre>new ABROAD.UI.Places.Pulldown({
+    area:    { first_opt_text: '選択してください' },
+    country: { first_opt_text: '国を選択してください' },
+    city:    { first_opt_text: '都市を選択してください' }
+});</pre>
+    <p>このようにエリア・国・都市それぞれ個別に指定します。</p>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <span class="lbl">エリア:</span> <select id="ab-area-sel2"></select><br style="clear:both" />
+        <span class="lbl">国:</span>     <select id="ab-country-sel2"></select><br style="clear:both" />
+        <span class="lbl">都市:</span>   <select id="ab-city-sel2"></select>
+    </div>
+    <h4>全部のプルダウンに対してまとめて一括で指定したい</h4>
+    <p><a href="dept.pulldown.html#opt-b-2">&gt;&gt; こちらの記述を参照してください。</a></p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-c">各地域ごとのツアー件数を表示</h3>
+    <p>以下のようにオプション指定する事で、各地域ごとに該当するAB-ROADツアー情報の数を表示させることができます:</p>
+    <pre>new ABROAD.UI.Places.Pulldown({
+    area:    { with_tour_count: true },
+    country: { with_tour_count: true },
+    city:    { with_tour_count: true }
+});</pre>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <span class="lbl">エリア:</span> <select id="ab-area-sel3"></select><br style="clear:both" />
+        <span class="lbl">国:</span>     <select id="ab-country-sel3"></select><br style="clear:both" />
+        <span class="lbl">都市:</span>   <select id="ab-city-sel3"></select>
+    </div>
+    <p>毎回Webサービスを駆使して動的に情報を取得する為、件数は日々自動的に変動する形になります。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-d">プルダウンの初期値を設定</h3>
+    <p>各プルダウンに予め何らかの地域を最初から設定しておきたい場合は以下のように書きます:</p>
+    <pre>new ABROAD.UI.Places.Pulldown({
+    city: { val: 'NYC' }
+});</pre>
+    <p>実際の動作例:</p>
+    <div class="sample">
+        <span class="lbl">エリア:</span> <select id="ab-area-sel4"></select><br style="clear:both" />
+        <span class="lbl">国:</span>     <select id="ab-country-sel4"></select><br style="clear:both" />
+        <span class="lbl">都市:</span>   <select id="ab-city-sel4"></select>
+    </div>
+    <p>同様に area または country を指定する事も可能です:</p>
+    <pre>// オーストラリアをデフォルトに
+new ABROAD.UI.Places.Pulldown({
+    country: { val: 'AU' }
+});</pre>
+    <pre>// ヨーロッパエリアをデフォルトに
+new ABROAD.UI.Places.Pulldown({
+    area: { val: 'EUR' }
+});</pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-e">任意のコード値から、都市や国名を判別したい</h3>
+    <p>都市コード 'A27' の都市名は？この都市が属する国やエリアのコード値および名称は？などを調べるには以下のインスタンスメソッドを使います:</p>
+    <pre>var places = ABROAD.UI.Places.Pulldown();
+places.find_item_by_code({
+    city: 'A27',
+    callback: function ( itm ){
+        itm.name;         // アユタヤ
+        itm.code;         // A27
+        itm.country.name; // タイ
+        itm.country.code; // TH
+        itm.area.name;    // アジア
+        itm.area.code;    // AAS
+    }
+});</pre>
+    <p>JSONP形式の通信にてWebサービスから情報を取得する為、上記の例のように引数 callback にて結果を処理するための関数を定義する形になります。</p>
+    <p>同様に area または country で調べる事も可能です:</p>
+    <pre>var places = ABROAD.UI.Places.Pulldown();
+places.find_item_by_code({
+    country: 'TH',
+    callback: function ( itm ){
+        itm.name;       // タイ
+        itm.area.name;  // アジア
+    }
+});</pre>
+    <p>同メソッドで返されるオブジェクトの中身はAB-ROAD
+    Webサービスの各エリア・国・都市マスタAPIが返す単体レコードの中身と同一です。詳しくは<a href="http://webservice.recruit.co.jp/ab-road/reference.html">これらAPIのドキュメント</a>を参照してください。</p>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-f">選択肢が刷新されたタイミングで任意の処理を実行したい</h3>
+    <p>インスタンス生成時のオプション指定 - on_update_hook - を各要素ごとに指定することで、プルダウンの選択肢が刷新される度に任意の処理を実施できます。<a href="../../hotpepper/docs/places.pulldown.html#opt-g">詳しくはこちらのドキュメントを参照してください</a>。</p>
+    <pre>ABROAD.UI.Places.Pulldown({
+    area: {
+        on_update_hook: function (){ ... }
+    },
+    country: {
+        on_update_hook: function (){ ... }
+    },
+    city: {
+        on_update_hook: function (){ ... }
+    }
+});</pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+    <h3 id="opt-g">現在のプルダウン内容を取得</h3>
+    <p>各プルダウンごとの get_current_stat() メソッドにより、現在選択中の値や全選択肢のリスト等の便利情報を取得する事ができます。<a href="../..//hotpepper/docs/places.pulldown.html#opt-h">詳しくはこちらのドキュメントを参照してください</a>。</p>
+    <pre>var p = ABROAD.UI.Places.Pulldown();
+var ar_stat = p.area.get_current_stat();
+var co_stat = p.country.get_current_stat();
+var ci_stat = p.city.get_current_stat();</pre>
+    <p class="back-to-top"><a href="#top">&gt;BACK TO TOP</a></p>
+</div><!-- end yui-b -->
+</div><!-- end yui-main -->
+<div class="yui-b navi">
+<div class="banner">
+    <a href="../../index.html"><img src="../../recruit/docs/img/rui-logo-banner.jpg"/></a>
+</div>
+<h3>INDEX</h3>
+<ul>
+    <li><a href="#synopsis">概要</a></li>
+    <li><a href="#sample">サンプル</a></li>
+    <li><a href="#requirement">動作条件</a></li>
+    <li><a href="#reuseable-code">簡易なコード例</a></li>
+    <li><a href="#howto">使い方</a></li>
+    <li>オプション機能
+        <ul class="nobullet" style="margin-top:10px;font-size:1em">
+            <li><a href="#opt-a">各プルダウンのid値を指定したい</a>
+            <li><a href="#opt-b">プルダウンの初期値 &quot;指定なし&quot;
+            を別の文言に変えたい</a>
+            <li><a href="#opt-c">各地域ごとのツアー件数を表示</a>
+            <li><a href="#opt-d">プルダウンの初期値を設定</a>
+            <li><a href="#opt-e">任意のコード値から、都市や国名を判別したい</a>
+            <li><a href="#opt-f">選択肢が刷新されたタイミングで任意の処理を実行したい</a>
+            <li><a href="#opt-g">現在のプルダウン内容を取得</a>
+        </ul>
+    </li>
+</ul>
+<h3 style="margin-top:20px">その他</h3>
+<ul class="nobullet">
+    <li><a href="http://webservice.recruit.co.jp/ab-road/">エイビーロード WEBサービス</a></li>
+    <li><a href="http://mtl.recruit.co.jp/contact.html">お問い合わせ</a></li>
+
+</ul>
+</div><!-- end yui-b navi -->
+</div><!-- end bd -->
+
+<div id="ft">
+<div class="inner">
+<div class="yui-gc">
+    <div class="yui-u first">
+    本コンテンツはリクルートが提供する実験サービスです
+    </div>
+    <div class="yui-u">
+    <p><a href="http://mtl.recruit.co.jp/"><img src="../../recruit/docs/img/mtl_logo.gif" border="0" alt="メディアテクノロジーラボ"></a></p>
+    </div>
+</div>
+</div><!-- end inner-->
+</div><!-- end ft -->
+</div><!-- end doc -->
+
+</body>
+</html>

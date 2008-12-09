@@ -1,0 +1,25 @@
+<html>
+<head>
+<script type="text/javascript" src="../../recruit/tests/js/JSAN.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+(function (){
+    if( $.browser.msie ){
+    document.write( 'this test runner does not support MS IE.<br/>'
+            + 'run it with Firefox/Mozilla and other browsers,<br/>'
+            + 'or run each *.t.html indivisually with MS IE.' );
+        return false;
+    }
+    var jsan = new JSAN();
+    jsan.use('Test.Harness.Browser');
+    new Test.Harness.Browser().runTests(
+        "miscs.t.html",
+        "places.pulldown.t.html"
+    );
+})();
+</script>
+</body>
+</html>
+

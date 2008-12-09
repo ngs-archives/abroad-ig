@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>例 ページング Simple - エイビーロード - Recruit UI Library</title>
+<style type="text/css">
+.rui-page-error {
+    color: #FF0000;
+}
+#rui-page {
+    margin-top: 20px;
+}
+</style>
+<script type="text/javascript" src="../docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript">
+
+// ご自身のAPIキーを設定してください
+var api_key = 'a450fa593ee3f2a4';
+
+// 初期化
+$( function(){
+    $( 'form > input[name=key]' ).val( api_key );
+    $( 'form' ).submit( function(){
+        jsonp_request();
+        return false;
+    });
+});
+
+// AJAX処理
+function jsonp_request ( start ){
+    // 表示初期化
+    if( !start ){ start = 1 }
+    var tgt = $( '#rui-page' );
+    tgt.html( 'loading...' );
+    var result = $( '#result' );
+    result.empty();
+
+    // リクエスト先 API URL 生成
+    var url = 'http://webservice.recruit.co.jp/ab-road/tour/v1/'
+        + '?format=jsonp&callback=?&'
+        + 'start=' + start + '&'
+        + $( 'form' ).formSerialize();
+
+    // リクエスト実施
+    $.getJSON( url, function ( tree ){
+        // エラーチェック
+        var res = tree.results;
+        if( res.error ){
+            tgt.html( '<span class="rui-page-error">'
+                + res.error[0].message + '</span>' )
+            return false;
+        }else if( res.results_returned == 0 ){
+            tgt.html( '<span class="rui-page-error">'
+                + '一致するツアーはありませんでした</span>' )
+            return false;
+        }
+
+        // ページング表示
+        var c = $( 'form > input[name=count]' ).val();
+        var page = new Recruit.UI.Page.Simple( tree, c );
+        page.paginate({
+            id: 'rui-page',
+            request: jsonp_request
+        });
+
+        // 検索結果
+        var res = tree.results;
+        var list = '<ol start="' + res.results_start + '">';
+        $( res.tour ).each( function(){
+            var text = this.price.min + '円～ ' + this.title;
+            text = text.substr( 0, 35 );
+            list += '<li><a href="' + this.urls.pc
+                + '">' + text + '...</a></li>';
+        });
+        list += '</ol>';
+        result.append( list );
+    });
+}
+</script>
+</head>
+<body>
+<h1>ページング Simple</h1>
+<form action="">
+    <input type="text" class="input_text" name="keyword"
+        value="ベルギー" />
+    <input type="hidden" name="key" value="" />
+    <input type="hidden" name="count" value="10" />
+    <input type="hidden" name="order" value="1" />
+    <input type="submit" value="検索"/>
+</form>
+<div id="rui-page"></div>
+<div id="result"></div>
+
+</body>
+</html>

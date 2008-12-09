@@ -1,0 +1,14 @@
+#hd-main {
+    color: #FFF;
+    border: 3px solid #DDD;
+    background: url(../img/header_background.gif) repeat-x #DD0000;
+}
+#bd .navi h3 {
+    color: #FFF;
+    background: #DD0000;
+    border: 3px solid #DDD;
+}
+#bd .cont h3 {
+    color: #DD0000;
+    border-left: 5px solid #DD0000;
+}

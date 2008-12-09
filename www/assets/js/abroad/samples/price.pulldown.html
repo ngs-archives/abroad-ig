@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>例 価格帯選択 プルダウン - エイビーロード - Recruit UI Library</title>
+<style type="text/css">
+select {
+    width: 100px;
+    margin-bottom: 5px;
+}
+</style>
+<script type="text/javascript" src="../../recruit/docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit/docs/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+<script type="text/javascript" src="../../abroad.ui.js"></script>
+<script type="text/javascript">
+$(function (){
+    new ABROAD.UI.Price.Pulldown();
+
+    /* 上限・下限それぞれにオプションを指定
+    new ABROAD.UI.Price.Pulldown({
+        'max' : { id:'my-max-sel' },
+        'min' : { id:'my-min-sel' }
+    });
+    */
+
+    /* 個別利用
+    new ABROAD.UI.Price.Max.Pulldown();
+    new ABROAD.UI.Price.Min.Pulldown();
+    */
+
+    $( '#sample-form' ).submit( function (){
+        alert( $( this ).formSerialize() );
+        return false;
+    });
+});
+</script>
+</head>
+<body>
+<h1>価格帯選択 プルダウン</h1>
+<div class="sample">
+    <form id="sample-form" action="">
+    <select id="ab-price-min-sel"></select> － 
+    <select id="ab-price-max-sel"></select><br />
+    <input type="submit" value="値を確認" />
+    </form>
+</div>
+
+</body>
+</html>

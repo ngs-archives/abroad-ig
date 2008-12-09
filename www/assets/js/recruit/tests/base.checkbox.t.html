@@ -1,0 +1,202 @@
+<html>
+<head>
+<script type="text/javascript" src="./js/JSAN.js"></script>
+<script type="text/javascript" src="../docs/js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../../recruit.ui.js"></script>
+</head>
+<body>
+<div style="display:none">
+    <div id="sample-chkbox"></div>
+    <div id="sample-chkbox-2"></div>
+    <div id="sample-chkbox-2-b"></div>
+    <div id="sample-chkbox-2-c"></div>
+    <div id="sample-chkbox-3" name="xxx"></div>
+    <div id="sample-chkbox-4"></div>
+    <div id="sample-chkbox-5"></div>
+    <div id="sample-chkbox-6"></div>
+    <div id="sample-chkbox-7"></div>
+    <div id="sample-chkbox-8"></div>
+</div>
+<pre id="test"><script>
+
+JSAN.use( "Test.More" );
+plan({ tests: 58 });
+
+is( typeof Recruit, 'function' );
+is( typeof Recruit.UI, 'function' );
+is( typeof Recruit.UI.Base, 'function' );
+is( typeof Recruit.UI.Base.Pulldown, 'function' );
+
+// define sample subclass for testing
+MyChk = Class.create( Recruit.UI.Base.Checkbox, {
+    _get_def_props: function (){
+        return {
+            id    : 'sample-chkbox',
+            label : 'ほげ',
+            name  : 'sample-name'
+        };
+    },
+    get_selections: function (){
+        return [
+            { value:'1', label:'関東' },
+            { value:'2', label:'関西' },
+            { value:'3', label:'東海', name:'other-name' }
+        ];
+    }
+});
+
+// 正常系 - 基本
+(function (){
+    var mp = new MyChk();
+    ok( mp, 'basic' );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox' );
+    var arr = elm.find( '.rui-checkbox-input' );
+    is( arr.length, 3 );
+    $.each( arr, function (i,d){
+        if( i == 2 ){
+            is( $( d ).attr( 'name' ), 'other-name' );
+        }else{
+            is( $( d ).attr( 'name' ), 'sample-name' );
+        }
+        is( $( d ).val(), i+1 );
+    });
+    var lbs = elm.find( '.rui-checkbox-label' );
+    is( lbs.length, 3 );
+    is( $( lbs[0] ).text(), '関東' );
+})();
+// 正常系 - オプション指定
+(function (){
+    var mp = new MyChk({
+        id: 'sample-chkbox-2',
+        val: 3
+    });
+    ok( mp, 'basic - with option' );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox-2' );
+    var arr = elm.find( '.rui-checkbox-input' );
+    is( arr.length, 3 );
+    is( $( arr[2] ).attr( 'checked' ), true );
+})();
+// 正常系 - オプション指定 (複数)
+(function (){
+    var mp = new MyChk({
+        id: 'sample-chkbox-2-b',
+        val: [ '3', 2 ]
+    });
+    ok( mp, 'basic - with option - multi' );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox-2-b' );
+    var arr = elm.find( '.rui-checkbox-input' );
+    is( arr.length, 3 );
+    is( $( arr[0] ).attr( 'checked' ), undefined );
+    is( $( arr[1] ).attr( 'checked' ), true );
+    is( $( arr[2] ).attr( 'checked' ), true );
+})();
+// 正常系 - オプション指定 (value & name)
+(function (){
+    var mp = new MyChk({
+        id: 'sample-chkbox-2-c',
+        val: [ 2, 'other-name' ]
+    });
+    ok( mp, 'basic - with option - name & val' );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox-2-c' );
+    var arr = elm.find( '.rui-checkbox-input' );
+    is( arr.length, 3 );
+    is( $( arr[0] ).attr( 'checked' ), undefined );
+    is( $( arr[1] ).attr( 'checked' ), true );
+    is( $( arr[2] ).attr( 'checked' ), true );
+})();
+(function (){
+    // name が既にある場合は上書きしない
+    var mp = new MyChk({
+        id   : 'sample-chkbox-3',
+        name : 'sample-name-3'
+    });
+    ok( mp );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox-3' );
+    is( elm.attr( 'name' ), 'xxx' );
+})();
+(function (){
+    // dont_update_ui = true なら初期化はしない
+    var mp = new MyChk({
+        id   : 'sample-chkbox-4',
+        dont_update_ui : true
+    });
+    ok( mp );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox-4' );
+    is( elm.find( '.rui-chkbox-input' ).length, 0 );
+})();
+// 正常系 - on_click_hook
+(function (){
+    var mp = new MyChk({
+        id: 'sample-chkbox-5',
+        on_click_hook: function ( def ){
+            is( def.label, '関西' );
+            is( $( this ).val(), 2 );
+        }
+    });
+    ok( mp, 'basic - on_click_hook' );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox-5' );
+    elm.find( '.rui-checkbox-input:eq(1)' ).click();
+})();
+// 正常系 - template 指定
+(function (){
+    var mp = new MyChk({
+        id: 'sample-chkbox-6',
+        template: 'vertical'
+    });
+    ok( mp, 'basic - template vertical' );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox-6' );
+    is( elm.find( 'br' ).length, 3 );
+})();
+// 正常系 - template table 指定
+(function (){
+    var mp = new MyChk({
+        id: 'sample-chkbox-7',
+        template: 'table_2c'
+    });
+    ok( mp, 'basic - template table' );
+    is( mp.is_error, false );
+    var elm = $( '#sample-chkbox-7' );
+    is( elm.find( 'table' ).length, 1 );
+    is( elm.find( 'tr' ).length, 2 );
+    is( elm.find( 'td' ).length, 3 );
+})();
+// 正常系 - on_update_hook + get_current_stat 
+(function (){
+    var mp = new MyChk({
+        id: 'sample-chkbox-8',
+        template: 'table_3c',
+        on_update_hook: function (){
+            ok( this, 'on_update_hook + get_current_stat' );
+            is( this.is_error, false );
+            $( this.elm.find( 'input' )[0] ).attr( 'checked', 'checked' );
+            $( this.elm.find( 'input' )[2] ).attr( 'checked', 'checked' );
+            var stat = this.get_current_stat();
+            isDeeply( stat.list, [
+                { name: 'sample-name', val: 1, text: '関東' },
+                { name: 'sample-name', val: 2, text: '関西' },
+                { name: 'other-name', val: 3, text: '東海' },
+            ]);
+            isDeeply( stat.val.values, [ 1, 3 ] );
+            isDeeply( stat.val.names, { 'sample-name':1, 'other-name':1 } );
+        }
+    });
+})();
+// 異常系
+(function (){
+    var mp = new MyChk({ id: 'gagagagga' });
+    ok( mp );
+    is( mp.is_error, true );
+    ok( mp.error_msg.match( /HTML要素が見つかりません/ ) );
+    ok( mp.error_msg.match( /ほげ/ ) );
+})();
+</script></pre>
+</body>
+</html>

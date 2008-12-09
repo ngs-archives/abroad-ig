@@ -1,0 +1,43 @@
+#form-block {
+    float: left;
+    width: 50%;
+}
+#result-block {
+    float: left;
+    width: 49%;
+}
+select {
+    width: 180px;
+    font-size: 0.9em;
+}
+select.short {
+    width: 100px;
+}
+label {
+    display: block;
+    float: left;
+    width: 100px;
+}
+input[type=text] {
+    width: 176px;
+}
+input[type=submit] {
+    width: 180px;
+    padding: 2px;
+}
+.ui-block {
+    margin-bottom: 10px;
+}
+#rui-result ol {
+    margin-left: 10px;
+}
+#rui-result li {
+    margin-bottom: 10px;
+}
+
+.rui-checkbox-each {
+    font-size: 0.7em;
+}
+.rui-checkbox-each.hover {
+    background: #CCC;
+}
