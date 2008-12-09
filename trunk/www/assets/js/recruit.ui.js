@@ -410,7 +410,7 @@ Recruit.UI.Driver.JSONP = Class.create({
         this.prm = $.extend({
             key      : Recruit.UI.key,
             count    : 100,
-            format   : 'jsonp'
+            format   : 'json'
         }, hash.prm );
         this.on_update_hook = hash.on_update_hook ||
             function (){};
@@ -423,11 +423,11 @@ Recruit.UI.Driver.JSONP = Class.create({
                 + '変数 Recruit.UI.key にご自身のAPIキーを'
                 + '指定してください' );
         }
-        this.use_jsonp = true;
-        this._set_specific_format(); // jsonp or json?
+        this.use_jsonp = false;
+        // this._set_specific_format(); // jsonp or json?
     },
     _set_specific_format: function (){
-        if( window.runtime ){  // Adobe AIR
+        if( window.runtime || window.gadgets ){  // Adobe AIR
             this.use_jsonp = false;
             this.prm.format = 'json'; 
         }
@@ -443,7 +443,11 @@ Recruit.UI.Driver.JSONP = Class.create({
         if( this.disable_cache || !this.cache[ key ] ){
             var _self = this;
             var url = this._fix_url( this.url );
-            $.getJSON( url, prm, function ( json ){
+            this.use_jsonp = false;
+            var ioparam = {};
+            ioparam[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+            gadgets.io.makeRequest( url + key, function ( json ){
+		json = json.data;
                 if( _self._is_ajax_error( json ) ){
                     post_func.apply( _self, [false, json, hash] );
                     _self.on_update_hook( false, json );
@@ -453,7 +457,7 @@ Recruit.UI.Driver.JSONP = Class.create({
                 _self._get_onload( json );
                 post_func.apply( _self, [true, json, hash] );
                 _self.on_update_hook( true, json );
-            });
+            }, ioparam);
         }else{
             var json = this.cache[ key ];
             this._get_onload( json );
@@ -489,6 +493,7 @@ Recruit.UI.Driver.JSONP = Class.create({
         if( this.use_jsonp && !url.match( /(&)?callback=\?(&|$)?/ ) ){
             url += ( url.match(/\?/) ? "&" : "?" ) + 'callback=?';
         }
+        else if( !url.match( /\?/ ) ) url += "?";
         return url;
     }
 });

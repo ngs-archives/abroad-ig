@@ -14,9 +14,9 @@
 	description="__MSG_module_description__"
 	screenshot="__MSG_module_screenshot__"
 	thumbnail="__MSG_module_thumbnail__"
-	scrolling="false"
+	scrolling="true"
 	singleton="false"
-	height="210"
+	height="280"
 	author_email="atsn.ngs+abroad-ig@gmail.com"
 	author="__MSG_author_name__"
 	author_affiliation="__MSG_author_affiliation__"
@@ -45,17 +45,19 @@
 <UserPref name="md" datatype="hidden" />
 
 <Content type="html"><![CDATA[
-<link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-ig/assets/css/abroad.css?rnd=4" />
+<link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-ig/assets/css/abroad.css?rnd=5" />
 <script type="text/javascript" src="http://abroad-ig.googlecode.com/svn/trunk/www/assets/js/jquery-1.2.6.pack.js?rnd=4"></script>
-<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.js?rnd=4"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/recruit.ui.js?rnd=4"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.ui.js?rnd=4"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.js?rnd=7"></script>
 <div id="form" class="wrapper">
 	<form id="search-form">
 		<fieldset id="dest">
 			<legend title="__MSG_select_destination__">__MSG_select_destination__</legend>
 			<div class="body">
-				<p class="s area"><select name="area"></select></p>
-				<p class="s country"><select name="country"></select></p>
-				<p class="s city"><select name="city"></select></p>
+				<p class="s area"><select name="area" id="ab-area-sel"></select></p>
+				<p class="s country"><select name="country" id="ab-country-sel"></select></p>
+				<p class="s city"><select name="city" id="ab-city-sel"></select></p>
 			</div>
 		</fieldset>
 		<fieldset id="dept">
@@ -85,6 +87,7 @@
 				</p>
 			</div>
 		</fieldset>
+		<p id="form-submit"><input type="submit" value="__MSG_search__" />
 	</form>
 </div>
 <div id="results" class="wrapper">
@@ -93,7 +96,7 @@
 <div id="starred" class="wrapper">
 	
 </div>
-<script type="text/javascript">ABROAD.init("__MODULE_ID__");</script>
+<script type="text/javascript">ABROAD_IG.init("__MODULE_ID__");</script>
 ]]></Content> 
 
 </Module> 
