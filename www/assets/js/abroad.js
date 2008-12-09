@@ -16,8 +16,6 @@ var TABNAMES,
     DIV_IDS = ["form","results","starred"],
     DES_KEYS = ["area","country","city"];
 var prefs, tabs;
-var REQUEST_PARAMS = {};
-REQUEST_PARAMS[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
 
 var NOIMAGE_GIF = ASSETS_PATH+"img/noimage.gif";
 var MAX_TITLE_LENGTH = 30;
@@ -44,11 +42,6 @@ var ABROAD_IG = {
 		$.each(TABNAMES,function(i){ tabs.addTab(this,DIV_IDS[i],CALLBACKS[i]); });
 		var forminit = false, tabindex, content;
 		var resultsinit = false, starredinit = false;
-		var json_driver = new Recruit.UI.Driver.JSONP({
-			url   : "/ab-road/tour/v1/alliance",
-			disable_cache : true,
-			prm : { type : "lite" }
-		});
 		function showForm() {
 			handleSwapTab();
 			if(forminit) return;
@@ -93,6 +86,11 @@ var ABROAD_IG = {
 			if(!starredinit) getResults();
 		}
 		function getResults() {
+			var driver =  new Recruit.UI.Driver.JSONP({
+				url   : "/ab-road/tour/v1/alliance",
+				disable_cache : true,
+				prm : { type : "lite" }
+			});
 			var prm = {}, err, ele = $("#"+DIV_IDS[tabindex]);
 			switch(tabindex) {
 				case 1:
@@ -105,7 +103,7 @@ var ABROAD_IG = {
 					resultsinit = true;
 					break;
 				case 2:
-					var ar = (prefs.getArray("starred")||[]);
+					var ar = getStarred();
 					if(!ar.length) return showNotice("nostarred");
 					prm.id = ar.join();
 					prm.count = 100;
@@ -115,7 +113,7 @@ var ABROAD_IG = {
 					return;
 			}
 			content.html("<div class=\"loading\"><p>"+prefs.getMsg("loading")+"<\/p><\/div>");
-			json_driver.get(appendResults,prm);
+			driver.get(appendResults,prm);
 		}
 		function appendResults(s,d,h) {
 			console.log(s,d,h);
@@ -145,12 +143,16 @@ var ABROAD_IG = {
 				var atag_s = "<a href=\""+ this.urls.pc +"\" title="+ ttl +" target=\"_blank\">";
 				var atag_e = "<\/a>";
 				var id = this.id;
+				var starred = isStarred(id);
+				var starred_msg = prefs.getMsg(starred?"remove_star":"add_star");
 				ht.push([
-					"<li class=\"tour ",id," ",i%2?"odd":"even","\" id=\"",id_prefix,"-",id,"\">",
+					"<li class=\"tour ",id," ",i%2?"odd":"even",starred?" starred":"","\" id=\"",id_prefix,"-",id,"\">",
 						"<div class=\"text\">",
 							"<h3>",atag_s,ttl,atag_e,"<\/h3>",
 							"<blockquote class=\"point\"><p>",pt,"<\/p><\/blockquote>",
-							"<p class=\"star\"><span onclick=\"ABROAD_IG.toggleStar('",id,"')\">",prefs.getMsg(isStarred(id)?"add_star":"remove_start"),"<\/span><\/p>",
+							"<p class=\"star\">",
+								"<span class=\"link\" onclick=\"ABROAD_IG.toggleStar('",id,"')\" title=\"",starred_msg ,"\">", starred_msg, "<\/span>",
+							"<\/p>",
 						"<\/div>",
 						"<p class=\"pict\">",atag_s,"<img src=\"",img,"\" alt=\"",alt,"\" \/>",atag_e,"<\/p>",
 					"<\/li>"
@@ -172,28 +174,42 @@ var ABROAD_IG = {
 		// star
 		//
 		function addStar(id) {
-			var ar = prefs.getArray("starred") || [];
+			var ar = getStarred();
 			if(!isStarred(id)) ar.push(id);
-			prefs.setArray("starred",ar);
-			handleStarChange();
+			$("ul.tours li."+id).addClass("starred");
+			var msg = prefs.getMsg("remove_star");
+			$("ul.tours li."+id+" p.star span").html(msg).attr("title",msg);
+			handleStarChange(ar,id);
 		}
 		function removeStar(id) {
-			var ar = prefs.getArray("starred") || [];
+			var ar = getStarred();
 			ar = $.grep(ar,function(n,i){ return n != id; })
-			prefs.setArray("starred",ar);
-			handleStarChange();
+			$("#star-"+id).remove();
+			$("ul.tours li."+id).removeClass("starred");
+			var msg = prefs.getMsg("add_star");
+			$("ul.tours li."+id+" p.star span").html(msg).attr("title",msg);
+			handleStarChange(ar,id);
 		}
-		function toggleStar(id) {
-			return isStarred(id)?removeStar(id):addStar(id);
+		function handleStarChange(ar,id) {
+			prefs.set("starred",getStarred(ar).join());
+			if(tabindex==2) {
+				if(!ar.length) showNotice("nostarred");
+				else {
+					$("#"+DIV_IDS[2]+" ul.tours li").each(function(i){
+						$(this).removeClass(!i%2?"odd":"even");
+						$(this).addClass(i%2?"odd":"even");
+					});
+				}
+			} else starredinit = false;
 		}
-		function isStarred(id) {
-			var ar = prefs.getArray("starred") || [];
-			return $.inArray(id,ar);
+		function getStarred(ar) {
+			ar = ar || (prefs.getString("starred") || "").split(",");
+			ar = $.grep(ar,function(n,i){ return typeof(n)=="string"&&n.length==8; })
+			while(ar.length>20) ar.pop();
+			return ar;
 		}
-		function handleStarChange() {
-			var ar = prefs.getArray("starred") || [];
-			
-		}
+		function isStarred(id)  { return $.inArray(id,getStarred())!=-1; }
+		function toggleStar(id) { return (isStarred(id)?removeStar:addStar)(id); }
 		this.toggleStar = toggleStar;
 	}
 }
