@@ -8,38 +8,26 @@
 
 ======================================== */
 
+$.gadgets.ready(function(){
+
 var ASSETS_PATH = "http://abroad-ig.googlecode.com/svn/trunk/www/assets/";
-var API_KEY = "b0b3029cd492f70f";
-Recruit.UI.key = API_KEY;
-var MODULE_ID;
-var TABNAMES,
-    DIV_IDS = ["form","results","starred"],
+Recruit.UI.key = "b0b3029cd492f70f";
+var DIV_IDS = ["form","results","starred"],
     DES_KEYS = ["area","country","city"];
-var prefs, tabs;
 
 var NOIMAGE_GIF = ASSETS_PATH+"img/noimage.gif";
 var MAX_TITLE_LENGTH = 30;
 var MAX_POINT_LENGTH = 50;
 
 function getRandomQuery() { return "rnd="+Math.ceil(Math.random()*10000000).toString(); }
-function serializeQuery(obj) {
-	var ret = "";
-	$.each(obj,function(i){ ret+=i+"="+this+"&"; });
-	return ret;
+
+function init() {
 }
 
+
+
 var ABROAD_IG = {
-	init : function(mid) {
-		MODULE_ID = mid;
-		prefs = new gadgets.Prefs(MODULE_ID);
-		TABNAMES = [
-			prefs.getMsg("search")||"search",
-			prefs.getMsg("result")||"result",
-			prefs.getMsg("starred")||"starred"
-		];
-		CALLBACKS = [showForm,showResult,showStarred];
-		tabs = new gadgets.TabSet(MODULE_ID,TABNAMES[prefs.getInt("tab")||0]);
-		$.each(TABNAMES,function(i){ tabs.addTab(this,DIV_IDS[i],CALLBACKS[i]); });
+	init : function() {
 		var forminit = false, tabindex, content;
 		var resultsinit = false, starredinit = false;
 		function showForm() {
@@ -68,7 +56,6 @@ var ABROAD_IG = {
 			});
 			$("#search-form").bind("submit", function(){
 				resultsinit = false;
-				tabs.setSelectedTab(1);
 				return false;
 			});
 		}
@@ -116,7 +103,6 @@ var ABROAD_IG = {
 			driver.get(appendResults,prm);
 		}
 		function appendResults(s,d,h) {
-			console.log(s,d,h);
 			var res = d&&d.results?d.results:{};
 			var err = res.error&&res.error[0]&&res.error[0].message?res.error[0].message:"fetch_error";
 			if(!s) return showNotice(err);
@@ -166,7 +152,7 @@ var ABROAD_IG = {
 			content.html("<p class=\"notice\">"+(prefs.getMsg(msgkey)||msgkey||prefs.getMsg("unknown_error"))+"<\/p>");
 		}
 		function handleSwapTab() {
-			tabindex = tabs.getSelectedTab().getIndex();
+			tabindex = 0;
 			content = $("#"+DIV_IDS[tabindex]);
 			return content;
 		}
@@ -213,3 +199,5 @@ var ABROAD_IG = {
 		this.toggleStar = toggleStar;
 	}
 }
+init();
+});
