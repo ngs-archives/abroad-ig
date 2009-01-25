@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<messagebundle>
+
+<!-- ========================================
+
+	ModulePrefs
+
+======================================== -->
+
+<msg name="module_title">エイビーロード</msg>
+<msg name="module_description">エイビーロードに掲載されているツアーをiGoogleで検索。</msg>
+
+<msg name="author_name">長瀬 敦史</msg>
+<msg name="author_affiliation"></msg>
+<msg name="author_location">丸の内 東京,日本</msg>
+<msg name="author_aboutme">開発者について</msg>
+
+<!-- ========================================
+
+	UI
+
+======================================== -->
+<msg name="starred">スター付き</msg>
+<msg name="result">検索結果</msg>
+<msg name="search">検索</msg>
+<msg name="condition">条件</msg>
+<msg name="loading">読込み中</msg>
+
+<msg name="select_area">方面を選択</msg>
+<msg name="select_country">国を選択</msg>
+<msg name="select_city">都市を選択</msg>
+
+<msg name="select_destination">行き先を指定する</msg>
+
+<msg name="select_departure">出発日時/都市を指定する</msg>
+<msg name="tokyo">東京</msg>
+<msg name="osaka">大阪</msg>
+<msg name="nagoya">名古屋</msg>
+<msg name="fukuoka">福岡</msg>
+<msg name="other_cities">その他都市</msg>
+
+<msg name="tours_available">件のツアーが該当しました。</msg>
+
+<msg name="add_star">スターをつける</msg>
+<msg name="remove_star">スターをはずす</msg>
+
+<!-- ========================================
+
+	Errors
+
+======================================== -->
+
+<msg name="unknown_error">予期せぬエラーが起こりました。</msg>
+<msg name="fetch_error">フィードが取得できません。</msg>
+
+<msg name="nostarred">スター付きのツアーはありません。</msg>
+<msg name="notours">該当するツアーが見つかりませんでした。</msg>
+
+</messagebundle>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<messagebundle>
+
+<!-- ========================================
+
+	ModulePrefs
+
+======================================== -->
+
+<msg name="module_title">AB-ROAD</msg>
+<msg name="module_description">Search AB-ROAD tour on your iGoogle.</msg>
+
+<msg name="author_name">Atsushi Nagase</msg>
+<msg name="author_affiliation"></msg>
+<msg name="author_location">Marunouchi Tokyo, JAPAN</msg>
+<msg name="author_aboutme">About me</msg>
+
+<!-- ========================================
+
+	UI
+
+======================================== -->
+<msg name="starred">Starred</msg>
+<msg name="result">Results</msg>
+<msg name="search">Search</msg>
+<msg name="condition">Condition</msg>
+<msg name="loading">Loading</msg>
+
+<msg name="select_area">Area</msg>
+<msg name="select_country">Country</msg>
+<msg name="select_city">City</msg>
+
+<msg name="select_destination">Select Destination</msg>
+
+<msg name="select_departure">Select departure</msg>
+<msg name="tokyo">Tokyo</msg>
+<msg name="osaka">Osaka</msg>
+<msg name="nagoya">Nagoya</msg>
+<msg name="fukuoka">Fukuoka</msg>
+<msg name="other_cities">Other Cities</msg>
+
+<msg name="tours_available">tours were found.</msg>
+
+<msg name="add_star">Add Star</msg>
+<msg name="remove_star">Remove Star</msg>
+
+<!-- ========================================
+
+	Errors
+
+======================================== -->
+
+<msg name="unknown_error">An unknown error has occured.</msg>
+<msg name="fetch_error">Could not fetch feed data.</msg>
+
+<msg name="nostarred">You have no starred tour.</msg>
+<msg name="notours">No tours were found.</msg>
+
+</messagebundle>
