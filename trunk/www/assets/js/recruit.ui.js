@@ -444,10 +444,7 @@ Recruit.UI.Driver.JSONP = Class.create({
             var _self = this;
             var url = this._fix_url( this.url );
             this.use_jsonp = false;
-            var ioparam = {};
-            ioparam[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
-            gadgets.io.makeRequest( url + key, function ( json ){
-		json = json.data;
+            $.gadgets.getJSON( url + key, function ( json ){
                 if( _self._is_ajax_error( json ) ){
                     post_func.apply( _self, [false, json, hash] );
                     _self.on_update_hook( false, json );
@@ -457,7 +454,7 @@ Recruit.UI.Driver.JSONP = Class.create({
                 _self._get_onload( json );
                 post_func.apply( _self, [true, json, hash] );
                 _self.on_update_hook( true, json );
-            }, ioparam);
+            });
         }else{
             var json = this.cache[ key ];
             this._get_onload( json );
