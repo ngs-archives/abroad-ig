@@ -18,15 +18,23 @@
   <Require feature="opensocial-0.8"/>
   <Require feature="dynamic-height"/>
   <Require feature="views" />
+  <Optional feature="content-rewrite">
+		<Param name="include-urls"></Param>
+		<Param name="exclude-urls">.*</Param>
+		<Param name="include-tags"></Param>
+	</Optional>
 </ModulePrefs>
 
 <Content type="html"><![CDATA[
-<link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-os/assets/css/abroad.css?rnd=12" />
+<link rel="stylesheet" type="text/css" href="http://test.ngsdev.org/abroad-os/assets/css/abroad.css?rnd=14" />
+<script type="text/javascript" src="http://user1.matsumoto.ne.jp/~goma/js/utf.js" charset="shift_jis"></script>
 <script type="text/javascript" src="http://abroad-ig.googlecode.com/svn/trunk/www/assets/js/jquery-1.2.6.pack.js?rnd=4"></script>
-<script type="text/javascript" src="http://test.ngsdev.org/jopensocial/src/jopensocial.js"></script>
-<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/recruit.ui.js?rnd=4"></script>
-<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.ui.js?rnd=4"></script>
-<script type="text/javascript" src="http://test.ngsdev.org/abroad-ig/assets/js/abroad.js?rnd=22"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/jopensocial/src/jopensocial.js?rnd=4"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/abroad-os/assets/js/recruit.ui.js?rnd=5"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/abroad-os/assets/js/abroad.ui.js?rnd=4"></script>
+<script type="text/javascript" src="http://test.ngsdev.org/abroad-os/assets/js/abroad.js?rnd=1"></script>
+<div id="main">
+
 <div id="tabs">
   <ul id="tabs-ul" class="tab">
     <li class="n1"><span class="link">条件を指定する</span></li>
@@ -34,10 +42,15 @@
     <li class="n3"><span class="link">スター付</span></li>
   </ul>
 </div>
-<div id="main">
 
-<div id="form " class="wrapper">
-  <form id="search-form">
+<div id="form" class="wrapper">
+  <form id="search-form" onsubmit="return false;">
+    <fieldset id="keyword">
+      <legend title="キーワード"><label for="input-keyword">キーワード</label></legend>
+      <div class="body">
+        <p class="keyword"><input type="text" value="" name="keyword" id="input-keyword"  /></p>
+      </div>
+    </fieldset>
     <fieldset id="dest">
       <legend title="行き先">行き先</legend>
       <div class="body">
@@ -47,32 +60,60 @@
       </div>
     </fieldset>
     <fieldset id="dept">
-      <legend title="出発地">出発地</legend>
-      <div class="body">
-        <p class="deptcity">
-          <label for="select-dept-tyo">
-            <input type="checkbox" value="TYO" name="dept" id="select-dept-tyo" />
-            <span class="l">東京</span>
-          </label>
-          <label for="select-dept-osa">
-            <input type="checkbox" value="OSA" name="dept" id="select-dept-osa" />
-            <span class="l">大阪</span>
-          </label>
-          <label for="select-dept-ngo">
-            <input type="checkbox" value="NGO" name="dept" id="select-dept-ngo" />
-            <span class="l">名古屋</span>
-          </label>
-          <label for="select-dept-fuk">
-            <input type="checkbox" value="FUK" name="dept" id="select-dept-fuk" />
-            <span class="l">福岡</span>
-          </label>
-          <label for="select-dept-999">
-            <input type="checkbox" value="999" name="dept" id="select-dept-999" />
-            <span class="l">その他</span>
-          </label>
-        </p>
-      </div>
-    </fieldset>
+       <legend title="出発地">出発地</legend>
+       <div class="body">
+         <p class="deptcity">
+           <label for="select-dept-tyo">
+             <input type="checkbox" value="TYO" name="dept" id="select-dept-tyo" />
+             <span class="l">東京</span>
+           </label>
+           <label for="select-dept-osa">
+             <input type="checkbox" value="OSA" name="dept" id="select-dept-osa" />
+             <span class="l">大阪</span>
+           </label>
+           <label for="select-dept-ngo">
+             <input type="checkbox" value="NGO" name="dept" id="select-dept-ngo" />
+             <span class="l">名古屋</span>
+           </label>
+           <label for="select-dept-fuk">
+             <input type="checkbox" value="FUK" name="dept" id="select-dept-fuk" />
+             <span class="l">福岡</span>
+           </label>
+           <label for="select-dept-999">
+             <input type="checkbox" value="999" name="dept" id="select-dept-999" />
+             <span class="l">その他</span>
+           </label>
+         </p>
+       </div>
+     </fieldset>
+      <fieldset id="month">
+       <legend title="出発月">出発月</legend>
+       <div class="body">
+          <p class="month">
+            <select id="ab-month-sel" name="ym"></select>
+          </p>
+       </div>
+     </fieldset>
+     <fieldset id="price">
+       <legend title="価格帯">価格帯</legend>
+       <div class="body">
+         <p class="price">
+           <select id="ab-price-min-sel"></select>
+           <span> － </span>
+           <select id="ab-price-max-sel"></select>
+         </p>
+       </div>
+     </fieldset>
+     <fieldset id="term">
+       <legend title="期間">期間</legend>
+       <div class="body">
+          <p class="term">
+            <select id="ab-term-min-sel" name="term_min"></select>
+            <span> － </span>
+            <select id="ab-term-max-sel" name="term_max"></select>
+          </p>
+       </div>
+     </fieldset>
     <p id="form-submit"><input type="submit" value="検索" />
   </form>
 </div>
