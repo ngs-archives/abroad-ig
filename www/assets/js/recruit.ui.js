@@ -444,7 +444,7 @@ Recruit.UI.Driver.JSONP = Class.create({
             var _self = this;
             var url = this._fix_url( this.url );
             this.use_jsonp = false;
-            $.gadgets.getJSON( url + key, function ( json ){
+            $.gadgets.getJSON( url , prm , function ( json ){
                 if( _self._is_ajax_error( json ) ){
                     post_func.apply( _self, [false, json, hash] );
                     _self.on_update_hook( false, json );

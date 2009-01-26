@@ -16,7 +16,24 @@ em { font-style:normal; font-weight:bolder; }
 blockquote { padding:0; margin:0; }
 .link, a { color:#00c; text-decoration:underline; cursor:pointer; }
 
-div.wrapper { padding:1em 0 0 0; font-size:12px; }
+div.wrapper { padding:1em 0 0 0; font-size:12px; display:none; }
+#main.form #form,
+#main.results #results,
+#main.starred #starred,
+#main.form #tabs,
+#main.results #tabs,
+#main.starred #tabs { display:block; } 
+
+#tabs { border-bottom:3px solid #d00; display:none; }
+#tabs-ul { margin:0; padding:0; height:22px; }
+#tabs-ul li { float:left; height:20px; border:2px solid #d00; border-right-width:0px; border-bottom-width:0px; }
+#tabs-ul li.n3 { border-right-width:2px; }
+#tabs-ul li span.link { font-size:9pt; color:#666; background:#fff; display:block; float:left; padding:4px 10px 2px 10px; text-decoration:none; }
+
+#main.form #tabs-ul li.n1 span.link,
+#main.results #tabs-ul li.n2 span.link,
+#main.starred #tabs-ul li.n3 span.link { background-color:#d00; color:#fff; cursor:default; }
+
 * html div.wrapper { font-size:0.8em; }
 form#search-form fieldset { width:100%; float:left; clear:left; padding-bottom:1em; }
 form#search-form legend { font-size:0.8em; padding:0 0 0.2em 0; }
@@ -25,6 +42,7 @@ form#search-form label input,
 form#search-form label span.l { display:block; float:left; }
 form#search-form div.body { border-top:1px solid #666; padding:1em 0; float:left; width:100%; }
 fieldset#dest select { width:32%; float:left; margin:0 1% 0 0; }
+form#search-form input#input-keyword { width:95%; }
 
 ul.tours, ul.tours li { width:100%; float:left; position:relative; top:0; left:0; clear:left; overflow:hidden; }
 ul.tours li { min-height:86px; border-top:1px solid #999; }
@@ -36,8 +54,11 @@ ul.tours div.text { padding:10px 0 1em 76px; }
 ul.tours div.text h3 { margin:0; padding:0 0 0.5em 0; font-size:1.1em; }
 ul.tours blockquote.point { font-size:0.8em; } 
 ul.tours p.star { padding:0.5em 0; float:left; }
-ul.tours p.star span { float:left; display:block; text-indent:18px; padding:2px 0; background:url(../img/star-deactive.gif) no-repeat 0 50%; }
-ul.tours li.starred p.star span { background-image:url(../img/star.gif); }
+ul.tours p.star span { float:left; display:block; text-indent:18px; padding:2px 0; background:url(http://abroad-ig.googlecode.com/svn/trunk/www/assets/img/star-deactive.gif) no-repeat 0 50%; }
+ul.tours li.starred p.star span { background-image:url(http://abroad-ig.googlecode.com/svn/trunk/www/assets/img/star.gif); }
 
-div.loading p { background:url(../img/loading.gif) no-repeat 2px 50% #900; padding:3px 0.5em 3px 22px; float:left; color:#fff; }
-p.notice { float:left; border:1px solid #fc6; padding:4px 4px 4px 22px; background:url(../img/error.gif) no-repeat 3px 50% #ffd; }
+div.loading p { background:url(http://abroad-ig.googlecode.com/svn/trunk/www/assets/img/loading.gif) no-repeat 2px 50% #900; padding:3px 0.5em 3px 22px; float:left; color:#fff; }
+p.notice { float:left; border:1px solid #fc6; padding:4px 4px 4px 22px; background:url(http://abroad-ig.googlecode.com/svn/trunk/www/assets/img/error.gif) no-repeat 3px 50% #ffd; }
+
+div.paginate { padding:1em 0; border-top:1px #ccc solid; margin-top:1em; float:left; width:100%; }
+div.paginate ul li { float:left; margin:0 1em 0 0; }
