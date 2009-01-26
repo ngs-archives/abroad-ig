@@ -72,7 +72,9 @@
 		$(window).bind("keydown",onKeyDown)
 		if($.opensocial.person("viewer").isOwner()) showForm();
 		else showResult();
-		$.gadgets.height("auto");
+		setTimeout(function(){
+			$.gadgets.height("auto");
+		},99);
 	}
 
 	function onKeyDown(e) {
@@ -164,7 +166,6 @@
 	}
 	function appendResults(s,d,h) {
 		var res = d&&d.results?d.results:{};
-		console.log(res);
 		var err = res.error&&res.error[0]&&res.error[0].message?res.error[0].message:"フィードが取得できません。";
 		if(!s) return showNotice(err);
 		var tours = res.tour;
@@ -187,8 +188,9 @@
 			var dname = this.dept_city.name || "";
 			var cname = this.city_summary || "";
 			var term = this.term?this.term+"日間 ":"";
-			var price = this.price.min;
-			if(this.price.min>this.price.max)
+			var price = Math.floor(this.price.min/100)/100;
+			if(this.price.min<this.price.max) price += "～"+Math.floor(this.price.max/100)/100;
+			price += "万円"
 			if(ttl.length>MAX_TITLE_LENGTH) ttl = ttl.substr(0,MAX_TITLE_LENGTH)+"...";
 			var pt = (this.tour_point||"").replace(/<BR>|\n|\s|\t/ig," ");
 			if(pt.length>MAX_POINT_LENGTH) pt = pt.substr(0,MAX_POINT_LENGTH)+"..."; 
