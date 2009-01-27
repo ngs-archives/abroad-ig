@@ -59,7 +59,6 @@
 			$("p.deptcity input:checkbox[@value='"+this+"']").attr("checked","checked");
 		});
 		condition.keyword = condition.keyword || "";
-		if($.opensocial.container.mixi) condition.keyword = utf.URLdecode(condition.keyword);
 		$("input[@name='keyword']").val(condition.keyword);
 		$.each(["ym","term_min","term_max","price_min","price_max"],function(){
 			if(condition[this]) $("*[@name='"+this+"']").val(condition[this]);
@@ -119,7 +118,6 @@
 				if($(this).attr("checked")) condition.dept.push($(this).attr("value"))
 			});
 			condition.keyword = $("input[@name='keyword']").val();
-			if($.opensocial.container.mixi) condition.keyword = encodeURIComponent(condition.keyword).toLowerCase();
 			$.each(["ym","term_min","term_max","price_min","price_max"],function(){
 				condition[this] =$("*[@name='"+this+"']").val()||"";
 			});
